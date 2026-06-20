@@ -1,0 +1,110 @@
+[
+  {
+    "startup_name": "Pitchly",
+    "logoURL": "/images/startups/pitchly-logo.png",
+    "industry": "FinTech",
+    "description": "Micro-investing platform connecting founders with small investors.",
+    "funding_stage": "Seed",
+    "founder_email": "aisha@pitchly.example",
+    "status": "Active"
+  },
+  {
+    "startup_name": "GreenGrain",
+    "logoURL": "/images/startups/greengrain-logo.png",
+    "industry": "AgriTech",
+    "description": "Supply-chain tracking for smallholder farms.",
+    "funding_stage": "Pre-Seed",
+    "founder_email": "rafi@greengrain.example",
+    "status": "Active"
+  },
+  {
+    "startup_name": "MedLink",
+    "logoURL": "/images/startups/medlink-logo.png",
+    "industry": "HealthTech",
+    "description": "Telemedicine platform for specialist consultations.",
+    "funding_stage": "Seed",
+    "founder_email": "naila@medlink.example",
+    "status": "Active"
+  },
+  {
+    "startup_name": "Learnly",
+    "logoURL": "/images/startups/learnly-logo.png",
+    "industry": "EdTech",
+    "description": "Adaptive learning tools for K-12 students.",
+    "funding_stage": "Series A",
+    "founder_email": "omar@learnly.example",
+    "status": "Active"
+  },
+  {
+    "startup_name": "MarketMuse",
+    "logoURL": "/images/startups/marketmuse-logo.png",
+    "industry": "Marketing",
+    "description": "AI-assisted content marketing for startups.",
+    "funding_stage": "Pre-Seed",
+    "founder_email": "tania@marketmuse.example",
+    "status": "Pending"
+  },
+  {
+    "startup_name": "TransitFlow",
+    "logoURL": "/images/startups/transitflow-logo.png",
+    "industry": "Mobility",
+    "description": "Last-mile delivery optimization for cities.",
+    "funding_stage": "Seed",
+    "founder_email": "rajiv@transitflow.example",
+    "status": "Active"
+  },
+  {
+    "startup_name": "EcoPack",
+    "logoURL": "/images/startups/ecopack-logo.png",
+    "industry": "Sustainability",
+    "description": "Compostable packaging solutions for e-commerce.",
+    "funding_stage": "Seed",
+    "founder_email": "maya@ecopack.example",
+    "status": "Active"
+  },
+  {
+    "startup_name": "DesignHive",
+    "logoURL": "/images/startups/designhive-logo.png",
+    "industry": "Design",
+    "description": "On-demand product design for small teams.",
+    "funding_stage": "Pre-Seed",
+    "founder_email": "samuel@designhive.example",
+    "status": "Active"
+  },
+  {
+    "startup_name": "DataBridge",
+    "logoURL": "/images/startups/databridge-logo.png",
+    "industry": "Data",
+    "description": "Data integration tools for early-stage startups.",
+    "funding_stage": "Series A",
+    "founder_email": "priya@databridge.example",
+    "status": "Active"
+  },
+  {
+    "startup_name": "AudibleAI",
+    "logoURL": "/images/startups/audibleai-logo.png",
+    "industry": "AI/ML",
+    "description": "Voice-AI assistants for customer support.",
+    "funding_stage": "Seed",
+    "founder_email": "luca@audibleai.example",
+    "status": "Pending"
+  },
+  {
+    "startup_name": "ShopLocal",
+    "logoURL": "/images/startups/shoplocal-logo.png",
+    "industry": "RetailTech",
+    "description": "Marketplace connecting local artisans with customers.",
+    "funding_stage": "Pre-Seed",
+    "founder_email": "farah@shoplocal.example",
+    "status": "Active"
+  },
+  {
+    "startup_name": "PaySwift",
+    "logoURL": "/images/startups/payswift-logo.png",
+    "industry": "Payments",
+    "description": "Simplified cross-border payments for SMEs.",
+    "funding_stage": "Series A",
+    "founder_email": "anders@payswift.example",
+    "status": "Active"
+  }
+]
