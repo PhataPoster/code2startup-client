@@ -80,7 +80,7 @@ const OpportunityDetails = () => {
       <div className="mx-auto w-full max-w-4xl">
         <div className="rounded-3xl border border-white/10 bg-white/5 overflow-hidden shadow-2xl">
           {/* Header */}
-          <div className="bg-gradient-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-8 sm:p-12">
+          <div className="bg-linear-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-8 sm:p-12">
             <h1 className="text-4xl font-black sm:text-5xl">{opportunity.role_title}</h1>
             <div className="mt-6 flex flex-wrap gap-3">
               <span className="rounded-full border border-orange-400/20 bg-orange-500/10 px-4 py-2 text-sm font-semibold text-orange-200">

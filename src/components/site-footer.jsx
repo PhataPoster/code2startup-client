@@ -110,7 +110,7 @@ export function SiteFooter() {
                 />
                 <button
                   type="submit"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-orange-500/30 bg-gradient-to-r from-orange-500 to-orange-400 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-orange-300"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-orange-500/30 bg-linear-to-r from-orange-500 to-orange-400 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-orange-300"
                 >
                   Subscribe
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -143,7 +143,7 @@ export function SiteFooter() {
           </div>
 
           {/* Divider */}
-          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
           {/* Bottom Section: Copyright + Made With Love */}
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">

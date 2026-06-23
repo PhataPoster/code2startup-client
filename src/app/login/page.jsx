@@ -80,7 +80,7 @@ function LoginInner() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-950 to-zinc-900 px-4 py-10 text-white sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-linear-to-br from-zinc-950 to-zinc-900 px-4 py-10 text-white sm:px-6 lg:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-md flex-col justify-center gap-8">
         {/* Branding */}
         <Link
@@ -188,7 +188,7 @@ function LoginInner() {
               type="submit"
               isDisabled={isLoading || !email || !password}
               isLoading={isLoading}
-              className="mt-2 w-full rounded-full bg-gradient-to-r from-orange-500 to-orange-400 font-semibold text-white shadow-lg shadow-orange-500/30 transition hover:from-orange-400 hover:to-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-500/70"
+              className="mt-2 w-full rounded-full bg-linear-to-r from-orange-500 to-orange-400 font-semibold text-white shadow-lg shadow-orange-500/30 transition hover:from-orange-400 hover:to-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-500/70"
             >
               Sign In
               <ArrowRight className="ml-1 h-4 w-4" />
@@ -199,7 +199,7 @@ function LoginInner() {
           </Form>
 
           {/* Divider */}
-          <div className="my-6 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="my-6 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
           {/* Social Login */}
           <div className="space-y-3">
@@ -219,7 +219,7 @@ function LoginInner() {
             </div>
           </div>
 
-          <div className="my-6 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="my-6 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
           <p className="text-center text-sm text-zinc-300">
             Don&apos;t have an account?{" "}
@@ -251,3 +251,4 @@ export default function LoginPage() {
     </Suspense>
   );
 }
+

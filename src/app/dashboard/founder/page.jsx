@@ -363,7 +363,7 @@ function FounderDashboardInner() {
             </div>
             <button
               onClick={() => router.push("/pricing")}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2 text-sm font-bold text-zinc-950 transition hover:from-amber-400 hover:to-orange-400"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-linear-to-r from-amber-500 to-orange-500 px-4 py-2 text-sm font-bold text-zinc-950 transition hover:from-amber-400 hover:to-orange-400"
             >
               <Crown size={14} /> Upgrade to Premium
             </button>
@@ -401,7 +401,7 @@ function FounderDashboardInner() {
                 </span>
               )}
               {tab === t.id && (
-                <span className="absolute inset-x-0 -bottom-px h-0.5 bg-gradient-to-r from-orange-500 to-amber-400" />
+                <span className="absolute inset-x-0 -bottom-px h-0.5 bg-linear-to-r from-orange-500 to-amber-400" />
               )}
             </button>
           ))}

@@ -273,7 +273,7 @@ function CollaboratorDashboardInner() {
             >
               {t.label}
               {tab === t.id && (
-                <span className="absolute inset-x-0 -bottom-px h-0.5 bg-gradient-to-r from-orange-500 to-amber-400" />
+                <span className="absolute inset-x-0 -bottom-px h-0.5 bg-linear-to-r from-orange-500 to-amber-400" />
               )}
             </button>
           ))}

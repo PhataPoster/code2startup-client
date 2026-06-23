@@ -50,7 +50,7 @@ const StartupDetails = () => {
       <div className="mx-auto w-full max-w-4xl">
         <div className="rounded-3xl border border-white/10 bg-white/5 overflow-hidden shadow-2xl">
           {/* Header Section */}
-          <div className="bg-gradient-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-8 sm:p-12">
+          <div className="bg-linear-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-8 sm:p-12">
             <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
               {startup.logoURL ? (
                 <img

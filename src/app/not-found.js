@@ -11,7 +11,7 @@ export default function NotFound() {
           {/* Large 404 */}
           <div className="mb-8">
             <h1 className="text-[120px] font-black leading-none sm:text-[150px] lg:text-[200px]">
-              <span className="bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">
                 404
               </span>
             </h1>
@@ -48,7 +48,7 @@ export default function NotFound() {
           <div className="flex flex-col gap-4 sm:flex-row">
             <Link
               href="/"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-orange-500/30 bg-gradient-to-r from-orange-500 to-orange-400 px-6 py-3 font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-orange-300"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-orange-500/30 bg-linear-to-r from-orange-500 to-orange-400 px-6 py-3 font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-orange-300"
             >
               <Home className="h-5 w-5" />
               Go Home

@@ -11,7 +11,7 @@ export default function TransactionRow({ payment }) {
       : "border-rose-400/30 bg-rose-500/10 text-rose-200";
 
   return (
-    <tr className="border-t border-white/10 transition hover:bg-white/[0.02]">
+    <tr className="border-t border-white/10 transition hover:bg-white/2">
       <td className="px-6 py-3 text-sm text-zinc-300">
         {payment.user_email || payment.email}
       </td>

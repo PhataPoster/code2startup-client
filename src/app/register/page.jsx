@@ -139,7 +139,7 @@ function RegisterInner() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-950 to-zinc-900 px-4 py-10 text-white sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-linear-to-br from-zinc-950 to-zinc-900 px-4 py-10 text-white sm:px-6 lg:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-2xl flex-col justify-center gap-8">
         <Link
           href="/"
@@ -368,14 +368,14 @@ function RegisterInner() {
               type="submit"
               isDisabled={isLoading || isUploadingImage || passwordErrors.length > 0}
               isLoading={isLoading || isUploadingImage}
-              className="mt-2 w-full rounded-full bg-gradient-to-r from-orange-500 to-orange-400 font-semibold text-white shadow-lg shadow-orange-500/30 transition hover:from-orange-400 hover:to-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-500/70"
+              className="mt-2 w-full rounded-full bg-linear-to-r from-orange-500 to-orange-400 font-semibold text-white shadow-lg shadow-orange-500/30 transition hover:from-orange-400 hover:to-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-500/70"
             >
               Create Account
               <ArrowRight className="ml-1 h-4 w-4" />
             </Button>
           </Form>
 
-          <div className="my-6 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="my-6 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
           <div className="space-y-3">
             <p className="text-center text-xs font-medium uppercase tracking-[0.12em] text-zinc-400">
@@ -394,7 +394,7 @@ function RegisterInner() {
             </div>
           </div>
 
-          <div className="my-6 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="my-6 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
           <p className="text-center text-sm text-zinc-300">
             Already have an account?{" "}
@@ -422,3 +422,4 @@ export default function RegisterPage() {
     </Suspense>
   );
 }
+

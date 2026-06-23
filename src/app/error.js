@@ -35,7 +35,7 @@ export default function GlobalError({ error, reset }) {
           <button
             type="button"
             onClick={() => reset?.()}
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-orange-500/30 bg-gradient-to-r from-orange-500 to-orange-400 px-6 py-3 font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-orange-500/30 bg-linear-to-r from-orange-500 to-orange-400 px-6 py-3 font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5"
           >
             <RefreshCw className="h-4 w-4" />
             Try Again

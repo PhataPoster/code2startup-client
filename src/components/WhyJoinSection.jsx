@@ -51,7 +51,7 @@ const itemVariants = {
 
 export default function WhyJoinSection() {
   return (
-    <section className="bg-gradient-to-b from-zinc-950 to-orange-950/20 px-4 py-16 text-white sm:px-6 lg:px-8">
+    <section className="bg-linear-to-b from-zinc-950 to-orange-950/20 px-4 py-16 text-white sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-7xl">
         <motion.div
           className="mb-12 text-center"
@@ -88,7 +88,7 @@ export default function WhyJoinSection() {
                 whileHover={{ y: -8 }}
               >
                 <motion.div
-                  className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-600/20 text-orange-400 group-hover:text-orange-300"
+                  className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-orange-500/20 to-orange-600/20 text-orange-400 group-hover:text-orange-300"
                   whileHover={{ rotate: 12, scale: 1.1 }}
                   transition={{ type: 'spring', stiffness: 400 }}
                 >
@@ -136,3 +136,4 @@ export default function WhyJoinSection() {
     </section>
   );
 }
+

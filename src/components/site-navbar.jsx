@@ -116,7 +116,7 @@ export function SiteNavbar() {
               </span>
               <Link
                 href="/dashboard"
-                className="inline-flex whitespace-nowrap items-center gap-2 rounded-full border border-orange-500/30 bg-gradient-to-r from-orange-500 to-orange-400 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-orange-300"
+                className="inline-flex whitespace-nowrap items-center gap-2 rounded-full border border-orange-500/30 bg-linear-to-r from-orange-500 to-orange-400 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-orange-300"
               >
                 <LayoutDashboard className="h-4 w-4" />
                 Dashboard
@@ -140,7 +140,7 @@ export function SiteNavbar() {
               </Link>
               <Link
                 href="/register"
-                className="inline-flex whitespace-nowrap items-center gap-2 rounded-full border border-orange-500/30 bg-gradient-to-r from-orange-500 to-orange-400 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-orange-300"
+                className="inline-flex whitespace-nowrap items-center gap-2 rounded-full border border-orange-500/30 bg-linear-to-r from-orange-500 to-orange-400 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-orange-300"
               >
                 Sign Up
                 <ChevronDown className="h-4 w-4" />

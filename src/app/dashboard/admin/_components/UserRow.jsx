@@ -17,7 +17,7 @@ const ROLE_STYLES = {
 export default function UserRow({ user, onBlock, busy }) {
   const Icon = ROLE_ICONS[user.role] || UserIcon;
   return (
-    <tr className="border-t border-white/10 transition hover:bg-white/[0.02]">
+    <tr className="border-t border-white/10 transition hover:bg-white/2">
       <td className="px-6 py-3">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-zinc-800 text-xs font-bold text-white">

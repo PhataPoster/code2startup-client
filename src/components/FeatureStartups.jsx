@@ -95,7 +95,7 @@ export default function FeatureStartups() {
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 className="flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-lg shadow-black/30 backdrop-blur-sm duration-300 hover:border-orange-400/30"
               >
-                <div className="flex h-48 items-center justify-center bg-gradient-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-6">
+                <div className="flex h-48 items-center justify-center bg-linear-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-6">
                   {startup.logoURL ? (
                     <img
                       src={startup.logoURL}
@@ -145,3 +145,4 @@ export default function FeatureStartups() {
     </section>
   );
 }
+

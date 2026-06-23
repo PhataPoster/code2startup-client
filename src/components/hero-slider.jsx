@@ -132,7 +132,7 @@ export default function HeroSlider() {
                           whileHover={{ y: -2, scale: 1.02 }}
                           whileTap={{ scale: 0.97 }}
                           transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                          className="inline-flex w-fit min-w-[170px] shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 px-5 py-3 font-bold text-white shadow-lg shadow-orange-500/25 cursor-pointer whitespace-nowrap transition-shadow duration-300 hover:shadow-orange-500/40"
+                          className="inline-flex w-fit min-w-[170px] shrink-0 items-center justify-center gap-2 rounded-full bg-linear-to-r from-orange-500 to-orange-400 px-5 py-3 font-bold text-white shadow-lg shadow-orange-500/25 cursor-pointer whitespace-nowrap transition-shadow duration-300 hover:shadow-orange-500/40"
                         >
                           <RiSearchEyeLine />
                           {slide.buttonText}

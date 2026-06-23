@@ -317,7 +317,7 @@ function AdminDashboardInner() {
                 </span>
               )}
               {tab === t.id && (
-                <span className="absolute inset-x-0 -bottom-px h-0.5 bg-gradient-to-r from-orange-500 to-amber-400" />
+                <span className="absolute inset-x-0 -bottom-px h-0.5 bg-linear-to-r from-orange-500 to-amber-400" />
               )}
             </button>
           ))}
@@ -391,7 +391,7 @@ function AdminDashboardInner() {
                 </div>
                 <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
                   <table className="w-full">
-                    <thead className="border-b border-white/10 bg-white/[0.02]">
+                    <thead className="border-b border-white/10 bg-white/2">
                       <tr>
                         <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-zinc-400">
                           Name
@@ -493,7 +493,7 @@ function AdminDashboardInner() {
                 <h2 className="mb-4 text-xl font-bold">Transactions</h2>
                 <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
                   <table className="w-full">
-                    <thead className="border-b border-white/10 bg-white/[0.02]">
+                    <thead className="border-b border-white/10 bg-white/2">
                       <tr>
                         <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-zinc-400">
                           Email

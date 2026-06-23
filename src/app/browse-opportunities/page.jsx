@@ -233,7 +233,7 @@ const BrowseOpportunities = () => {
               {opportunities.map((opp) => (
                 <Link key={opp._id} href={`/opportunity/${opp._id}`}>
                   <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg shadow-black/30 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-orange-400/30 cursor-pointer">
-                    <div className="flex h-32 items-center justify-center bg-gradient-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-6">
+                    <div className="flex h-32 items-center justify-center bg-linear-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-6">
                       <h3 className="text-center text-lg font-bold text-orange-300">
                         {opp.role_title}
                       </h3>
@@ -332,3 +332,4 @@ const BrowseOpportunities = () => {
 };
 
 export default BrowseOpportunities;
+

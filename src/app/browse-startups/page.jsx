@@ -217,7 +217,7 @@ const BrowseStartups = () => {
               {startups.map((startup) => (
                 <Link key={startup._id} href={`/startup/${startup._id}`}>
                   <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg shadow-black/30 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-orange-400/30 cursor-pointer">
-                    <div className="flex h-40 items-center justify-center bg-gradient-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-6">
+                    <div className="flex h-40 items-center justify-center bg-linear-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-6">
                       {startup.logoURL ? (
                         <img
                           src={startup.logoURL}
@@ -309,3 +309,4 @@ const BrowseStartups = () => {
 };
 
 export default BrowseStartups;
+
