@@ -104,7 +104,9 @@ function FounderDashboardInner() {
     try {
       const [startupsRes, appsRes, premiumRes] = await Promise.all([
         api.get("/startups"),
-        api.get("/applications/founder"),
+        // Fetch a large slice so per-opp views have full data.
+        // Server still returns pagination metadata for free.
+        api.get("/applications/founder?limit=100"),
         api.get("/payments/status").catch(() => ({ data: { isPremium: false } })),
       ]);
       const mine = (startupsRes.data || []).filter(

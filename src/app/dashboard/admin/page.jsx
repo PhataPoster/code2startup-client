@@ -19,6 +19,7 @@ import { signOut } from "@/lib/auth-client";
 import UserRow from "./_components/UserRow";
 import StartupModerationCard from "./_components/StartupModerationCard";
 import TransactionRow from "./_components/TransactionRow";
+import Pagination from "@/components/Pagination";
 
 const TABS = [
   { id: "overview", label: "Overview" },
@@ -61,6 +62,14 @@ function AdminDashboardInner() {
   const [userSearch, setUserSearch] = useState("");
   const [startupFilter, setStartupFilter] = useState("all");
 
+  // Pagination
+  const [usersPage, setUsersPage] = useState(1);
+  const [usersLimit, setUsersLimit] = useState(10);
+  const [usersMeta, setUsersMeta] = useState({ total: 0, pages: 1 });
+  const [paymentsPage, setPaymentsPage] = useState(1);
+  const [paymentsLimit, setPaymentsLimit] = useState(10);
+  const [paymentsMeta, setPaymentsMeta] = useState({ total: 0, pages: 1 });
+
   // ===== Auth / Role gate =====
   useEffect(() => {
     if (sessionLoading) return;
@@ -85,16 +94,21 @@ function AdminDashboardInner() {
     setLoading(true);
     setError("");
     try {
+      const usersQs = `page=${usersPage}&limit=${usersLimit}${
+        userSearch ? `&q=${encodeURIComponent(userSearch)}` : ""
+      }`;
       const [usersRes, startupsRes, oppsRes, paymentsRes] = await Promise.all([
-        api.get("/users"),
+        api.get(`/users?${usersQs}`),
         api.get("/startups?limit=200"),
         api.get("/opportunities?limit=200"),
-        api.get("/payments"),
+        api.get(`/payments?page=${paymentsPage}&limit=${paymentsLimit}`),
       ]);
       setUsers(usersRes.data || []);
       setStartups(startupsRes.data || []);
       setOpportunities(oppsRes.data || []);
       setPayments(paymentsRes.data || []);
+      setUsersMeta({ total: usersRes.total ?? 0, pages: usersRes.pages ?? 1 });
+      setPaymentsMeta({ total: paymentsRes.total ?? 0, pages: paymentsRes.pages ?? 1 });
     } catch (err) {
       console.error(err);
       setError(err.message || "Failed to load admin data");
@@ -106,7 +120,18 @@ function AdminDashboardInner() {
   useEffect(() => {
     if (user?.role === "admin") fetchAll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [user, usersPage, usersLimit, paymentsPage, paymentsLimit]);
+
+  // Debounced refetch on user search.
+  useEffect(() => {
+    if (!user || user.role !== "admin") return;
+    const t = setTimeout(() => {
+      setUsersPage(1);
+      fetchAll();
+    }, 400);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userSearch]);
 
   // ===== Stats =====
   const totalRevenue = useMemo(
@@ -408,6 +433,15 @@ function AdminDashboardInner() {
                     </tbody>
                   </table>
                 </div>
+                <Pagination
+                  page={usersPage}
+                  pages={usersMeta.pages}
+                  total={usersMeta.total}
+                  limit={usersLimit}
+                  onPage={setUsersPage}
+                  onLimit={setUsersLimit}
+                  busy={busy || loading}
+                />
               </section>
             )}
 
@@ -493,6 +527,15 @@ function AdminDashboardInner() {
                     </tbody>
                   </table>
                 </div>
+                <Pagination
+                  page={paymentsPage}
+                  pages={paymentsMeta.pages}
+                  total={paymentsMeta.total}
+                  limit={paymentsLimit}
+                  onPage={setPaymentsPage}
+                  onLimit={setPaymentsLimit}
+                  busy={busy || loading}
+                />
               </section>
             )}
           </>
