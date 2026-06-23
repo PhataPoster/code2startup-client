@@ -83,7 +83,7 @@ export default function HeroSlider() {
 
                   <div className="mt-4 flex flex-col items-start sm:flex-row sm:items-start gap-4">
                     <Link href="/browse-startups">
-                      <button className="inline-flex w-fit min-w-[170px] shrink-0 items-center justify-center gap-2 rounded-full bg-linear-to-r from-orange-500 to-orange-400 px-5 py-3 font-bold text-white shadow-lg shadow-orange-500/25 cursor-pointer whitespace-nowrap transition-all duration-300 hover:-translate-y-0.5 hover:shadow-orange-500/40">
+                      <button className="inline-flex w-fit min-w-[170px] shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 px-5 py-3 font-bold text-white shadow-lg shadow-orange-500/25 cursor-pointer whitespace-nowrap transition-all duration-300 hover:-translate-y-0.5 hover:shadow-orange-500/40">
                         <RiSearchEyeLine />
                         {slide.buttonText}
                       </button>

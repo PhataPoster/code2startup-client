@@ -317,7 +317,7 @@ export default function RegisterPage() {
               <Label className="text-sm font-medium text-zinc-200">Profile Picture (optional)</Label>
               <div className="mt-2 flex items-center gap-4">
                 {imagePreview ? (
-                  <div className="relative h-16 w-16 flex-shrink-0">
+                  <div className="relative h-16 w-16 shrink-0">
                     <Image
                       src={imagePreview}
                       alt="Profile preview"
@@ -334,7 +334,7 @@ export default function RegisterPage() {
                     </button>
                   </div>
                 ) : (
-                  <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-dashed border-white/20 bg-zinc-800">
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-dashed border-white/20 bg-zinc-800">
                     <Upload className="h-6 w-6 text-zinc-500" />
                   </div>
                 )}
@@ -363,22 +363,11 @@ export default function RegisterPage() {
                 id="terms"
                 className="mt-0.5"
               />
-              <Label htmlFor="terms" className="text-xs leading-relaxed text-zinc-300">
-                I agree to the{" "}
-                <Link href="/terms" className="text-orange-400 transition hover:text-orange-300 hover:underline">
-                  Terms of Service
-                </Link>{" "}
-                and{" "}
-                <Link href="/privacy" className="text-orange-400 transition hover:text-orange-300 hover:underline">
-                  Privacy Policy
-                </Link>
-                .
-              </Label>
             </div>
 
             <Button
               type="submit"
-              isDisabled={isLoading || isUploadingImage || !agreeTerms || passwordErrors.length > 0}
+              isDisabled={isLoading || isUploadingImage || passwordErrors.length > 0}
               isLoading={isLoading || isUploadingImage}
               className="mt-2 w-full rounded-full bg-gradient-to-r from-orange-500 to-orange-400 font-semibold text-white shadow-lg shadow-orange-500/30 transition hover:from-orange-400 hover:to-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-500/70"
             >

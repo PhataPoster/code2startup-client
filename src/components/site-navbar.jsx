@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import {
   ChevronDown,
@@ -11,6 +11,8 @@ import {
   X,
   BriefcaseBusiness,
   Home,
+  LogOut,
+  LayoutDashboard,
 } from "lucide-react";
 import { BrandMark } from "./brand-mark";
 
@@ -44,7 +46,30 @@ function NavItem({ href, label, icon: Icon, active, onClick }) {
 
 export function SiteNavbar() {
   const pathname = usePathname() || "/";
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        setUser(JSON.parse(userData));
+      }
+    } catch (error) {
+      console.error("Error loading user:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    setMobileOpen(false);
+    router.push("/");
+  };
 
   const links = useMemo(() => publicLinks, []);
 
@@ -84,20 +109,44 @@ export function SiteNavbar() {
         </div>
 
         <div className="ml-auto hidden shrink-0 items-center gap-3 lg:flex">
-          <Link
-            href="/login"
-            className="inline-flex whitespace-nowrap items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-zinc-200 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
-          >
-            <LogIn className="h-4 w-4" />
-            Login
-          </Link>
-          <Link
-            href="/browse-opportunities"
-            className="inline-flex whitespace-nowrap items-center gap-2 rounded-full border border-orange-500/30 bg-gradient-to-r from-orange-500 to-orange-400 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-orange-300"
-          >
-            Get Started
-            <ChevronDown className="h-4 w-4" />
-          </Link>
+          {!loading && user ? (
+            <>
+              <span className="text-sm text-zinc-300">
+                {user.name} <span className="text-xs text-zinc-500">({user.role})</span>
+              </span>
+              <Link
+                href="/dashboard"
+                className="inline-flex whitespace-nowrap items-center gap-2 rounded-full border border-orange-500/30 bg-gradient-to-r from-orange-500 to-orange-400 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-orange-300"
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                Dashboard
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="inline-flex whitespace-nowrap items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-zinc-200 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="inline-flex whitespace-nowrap items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-zinc-200 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
+              >
+                <LogIn className="h-4 w-4" />
+                Login
+              </Link>
+              <Link
+                href="/register"
+                className="inline-flex whitespace-nowrap items-center gap-2 rounded-full border border-orange-500/30 bg-gradient-to-r from-orange-500 to-orange-400 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:from-orange-400 hover:to-orange-300"
+              >
+                Sign Up
+                <ChevronDown className="h-4 w-4" />
+              </Link>
+            </>
+          )}
         </div>
 
         <button
@@ -130,13 +179,14 @@ export function SiteNavbar() {
             <Link
               href="/"
               className="flex items-center gap-3 rounded-2xl px-1 py-1 focus:outline-none focus:ring-2 focus:ring-orange-500/70"
+              onClick={() => setMobileOpen(false)}
             >
               <BrandMark className="h-9 w-9" />
               <span className="flex flex-col leading-none">
                 <span className="text-base font-semibold tracking-tight text-white">
                   Code2Startup
                 </span>
-                <span className="text-xs text-zinc-400">Startup team builder platform</span>
+                <span className="text-xs text-zinc-400">Startup team builder</span>
               </span>
             </Link>
 
@@ -169,22 +219,49 @@ export function SiteNavbar() {
             </div>
 
             <div className="mt-6 grid gap-3 border-t border-white/10 pt-6">
-              <Link
-                href="/login"
-                onClick={() => setMobileOpen(false)}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-zinc-200 transition hover:bg-white/10 hover:text-white"
-              >
-                <LogIn className="h-4 w-4" />
-                Login
-              </Link>
-              <Link
-                href="/browse-opportunities"
-                onClick={() => setMobileOpen(false)}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-400"
-              >
-                Get Started
-                <ChevronDown className="h-4 w-4" />
-              </Link>
+              {!loading && user ? (
+                <>
+                  <div className="rounded-lg bg-white/5 p-4">
+                    <p className="text-xs text-zinc-400">Logged in as</p>
+                    <p className="mt-1 font-semibold text-white">{user.name}</p>
+                    <p className="text-xs text-orange-200">{user.role}</p>
+                  </div>
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setMobileOpen(false)}
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-400"
+                  >
+                    <LayoutDashboard className="h-4 w-4" />
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm font-semibold text-red-200 transition hover:bg-red-500/20"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-zinc-200 transition hover:bg-white/10 hover:text-white"
+                  >
+                    <LogIn className="h-4 w-4" />
+                    Login
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => setMobileOpen(false)}
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-400"
+                  >
+                    Sign Up
+                    <ChevronDown className="h-4 w-4" />
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
