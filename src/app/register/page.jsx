@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Button,
   Checkbox,
@@ -28,8 +28,9 @@ const roleOptions = [
   { key: "collaborator", label: "Collaborator – I want to join a startup" },
 ];
 
-export default function RegisterPage() {
+function RegisterInner() {
   const router = useRouter();
+  const search = useSearchParams();
   const [role, setRole] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -110,18 +111,16 @@ export default function RegisterPage() {
         email,
         password,
         name,
-        role,                // <-- passed as top‑level field
+        role,
         image: imageUrl || undefined,
-        callbackURL: "/dashboard",
+        callbackURL: search.get("redirect") || "/dashboard",
       });
-
-      console.log("Registration result:", result); // debug
 
       if (result.error) {
         throw new Error(result.error.message || "Registration failed");
       }
 
-      router.push("/dashboard");
+      router.push(search.get("redirect") || "/dashboard");
     } catch (err) {
       setError(err.message || "Registration failed. Please try again.");
     } finally {
@@ -413,5 +412,13 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={null}>
+      <RegisterInner />
+    </Suspense>
   );
 }

@@ -3,8 +3,8 @@ import { jwtClient } from "better-auth/client/plugins";
 
 /**
  * Browser-side Better Auth client.
- * The `baseURL` defaults to the Next.js origin (the API route is mounted at /api/auth/*).
- * Add NEXT_PUBLIC_BETTER_AUTH_URL to override when client and server are on different hosts.
+ * - baseURL defaults to the current page origin so /api/auth/* works on Vercel/Render.
+ * - jwtClient() exposes authClient.token() which we use to call our Express API.
  */
 export const authClient = createAuthClient({
   baseURL:
@@ -14,4 +14,4 @@ export const authClient = createAuthClient({
   plugins: [jwtClient()],
 });
 
-export const { signIn, signUp, signOut, useSession } = authClient;
+export const { signIn, signUp, signOut, useSession, token } = authClient;

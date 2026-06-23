@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Button,
   Checkbox,
@@ -16,15 +16,19 @@ import { FaGoogle } from "react-icons/fa";
 import { ArrowRight, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 import { authClient } from "@/lib/auth-client";
+import { clearAuthToken } from "@/lib/api";
 
-export default function LoginPage() {
+function LoginInner() {
   const router = useRouter();
+  const search = useSearchParams();
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const intended = search.get("redirect") || "/dashboard";
 
   // Handle email/password login
   const handleLogin = async (e) => {
@@ -46,17 +50,16 @@ export default function LoginPage() {
       const result = await authClient.signIn.email({
         email: emailVal,
         password: passwordVal,
-        // Better Auth will store session in HTTP‑only cookie
-        // The 'rememberMe' could be passed as metadata if needed,
-        // but typically the cookie's maxAge handles this.
       });
 
       if (result.error) {
         throw new Error(result.error.message || "Invalid credentials");
       }
 
-      // Redirect to dashboard or intended route
-      router.push("/dashboard");
+      // Pre-warm the JWT cache so the next API call is fast
+      clearAuthToken();
+
+      router.push(intended);
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");
       setIsLoading(false);
@@ -238,5 +241,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginInner />
+    </Suspense>
   );
 }
