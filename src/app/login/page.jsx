@@ -59,6 +59,25 @@ function LoginInner() {
       // Pre-warm the JWT cache so the next API call is fast
       clearAuthToken();
 
+      // Tell the rest of the app (e.g. the navbar) to refresh from the new session
+      // before we navigate away, so the UI is correct on the next page.
+      try {
+        const session = await authClient.getSession();
+        const sessionUser = session?.data?.user;
+        if (sessionUser) {
+          const normalized = {
+            name: sessionUser.name || sessionUser.email?.split("@")[0] || "User",
+            email: sessionUser.email,
+            role: sessionUser.role || "collaborator",
+            image: sessionUser.image || "",
+          };
+          localStorage.setItem("user", JSON.stringify(normalized));
+          window.dispatchEvent(new Event("auth-change"));
+        }
+      } catch (e) {
+        console.error("Post-login session sync failed:", e);
+      }
+
       router.push(intended);
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");
