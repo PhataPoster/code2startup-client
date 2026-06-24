@@ -3,9 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useSession } from "@/lib/use-session";
-import { clearAuthToken } from "@/lib/api";
-import { signOut } from "@/lib/auth-client";
-import { Crown, LogOut, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { Crown, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { DashboardSideNav } from "@/components/dashboard/SideNavbar";
 import { FounderDataProvider, useFounderData } from "./_components/founder-data";
 
@@ -62,16 +60,6 @@ function FounderLayoutInner({ children }) {
     return () => clearTimeout(t);
   }, [toast]);
 
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-    } catch (e) {
-      console.error(e);
-    }
-    clearAuthToken();
-    router.push("/login");
-  };
-
   if (sessionLoading || !user || user.role !== "founder") {
     return <DashboardSkeleton />;
   }
@@ -82,7 +70,7 @@ function FounderLayoutInner({ children }) {
         <DashboardSideNav />
         <main className="min-w-0 flex-1 px-4 py-8 sm:px-6 lg:px-8">
           <div className="mx-auto w-full max-w-7xl">
-            <DashboardHeader onSignOut={handleSignOut} />
+            <DashboardHeader />
             {toast && <Toast tone={toast.type}>{toast.message}</Toast>}
             <ErrorBanner />
             {children}
@@ -93,7 +81,7 @@ function FounderLayoutInner({ children }) {
   );
 }
 
-function DashboardHeader({ onSignOut }) {
+function DashboardHeader() {
   const { user, isPremium } = useFounderData();
   return (
     <header className="mb-6 flex flex-wrap items-start justify-between gap-3">
@@ -110,12 +98,6 @@ function DashboardHeader({ onSignOut }) {
           )}
         </p>
       </div>
-      <button
-        onClick={onSignOut}
-        className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-rose-500/15 hover:text-rose-200"
-      >
-        <LogOut size={14} /> Sign out
-      </button>
     </header>
   );
 }

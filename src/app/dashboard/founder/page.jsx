@@ -1,12 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { Crown, ArrowRight } from "lucide-react";
+import { Crown, ArrowRight, ClockAlert } from "lucide-react";
 import { useFounderData } from "./_components/founder-data";
 
 export default function FounderOverviewPage() {
-  const { stats, opportunities, isPremium, hitsFreeLimit, FREE_OPP_LIMIT } =
-    useFounderData();
+  const {
+    stats,
+    opportunities,
+    isPremium,
+    hitsFreeLimit,
+    FREE_OPP_LIMIT,
+    hasApprovedStartup,
+    pendingStartups,
+  } = useFounderData();
 
   return (
     <div className="space-y-6">
@@ -43,16 +50,34 @@ export default function FounderOverviewPage() {
         </div>
       )}
 
+      {/* Admin-approval gate banner */}
+      {pendingStartups > 0 && !hasApprovedStartup && (
+        <div className="flex flex-wrap items-start justify-between gap-3 rounded-2xl border border-amber-400/40 bg-amber-500/10 p-4 text-amber-100">
+          <div className="flex items-start gap-3">
+            <ClockAlert size={22} className="mt-0.5 shrink-0 text-amber-300" />
+            <div>
+              <p className="font-bold">Awaiting admin review</p>
+              <p className="mt-0.5 text-xs text-amber-200/80">
+                {pendingStartups} startup{pendingStartups === 1 ? " is" : "s are"}{" "}
+                pending approval. You can post opportunities once an admin
+                approves your startup. You can still edit your startup profile
+                in the meantime.
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/dashboard/founder/startups"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-amber-400/30 bg-amber-500/10 px-3 py-1.5 text-xs font-bold text-amber-200 transition hover:bg-amber-500/20"
+          >
+            View startups <ArrowRight size={12} />
+          </Link>
+        </div>
+      )}
+
       {/* Stats */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <StatCard label="Startups" value={stats.startups} />
         <StatCard label="Opportunities" value={stats.opportunities} />
-        <StatCard
-          label="Pending Apps"
-          value={stats.pendingApps}
-          accent={stats.pendingApps > 0 ? "amber" : null}
-        />
-        <StatCard label="Total Apps" value={stats.totalApps} />
       </div>
 
       {/* Quick links */}

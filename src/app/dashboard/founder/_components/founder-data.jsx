@@ -68,6 +68,16 @@ export function FounderDataProvider({ user, children }) {
     [startups, opportunities, applications]
   );
 
+  // Admin-approval gate (server enforces too — these are for UI affordances).
+  const hasApprovedStartup = useMemo(
+    () => startups.some((s) => s.status === "Active"),
+    [startups]
+  );
+  const pendingStartups = useMemo(
+    () => startups.filter((s) => s.status === "Pending").length,
+    [startups]
+  );
+
   const hitsFreeLimit = opportunities.length >= FREE_OPP_LIMIT && !isPremium;
 
   // ===== Startup handlers =====
@@ -166,6 +176,8 @@ export function FounderDataProvider({ user, children }) {
     stats,
     hitsFreeLimit,
     FREE_OPP_LIMIT,
+    hasApprovedStartup,
+    pendingStartups,
     // actions
     refresh: fetchAll,
     submitStartup,

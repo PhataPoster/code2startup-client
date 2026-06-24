@@ -1,7 +1,7 @@
 [
   {
     "startup_name": "Pitchly",
-    "logoURL": "/images/startups/pitchly-logo.png",
+    "logoURL": "https://i.ibb.co.com/ds9RCfCq/img1.webp",
     "industry": "FinTech",
     "description": "Micro-investing platform connecting founders with small investors.",
     "funding_stage": "Seed",
@@ -10,7 +10,7 @@
   },
   {
     "startup_name": "GreenGrain",
-    "logoURL": "/images/startups/greengrain-logo.png",
+    "logoURL": "https://i.ibb.co.com/7JXpRLbK/img2.avif",
     "industry": "AgriTech",
     "description": "Supply-chain tracking for smallholder farms.",
     "funding_stage": "Pre-Seed",
@@ -19,7 +19,7 @@
   },
   {
     "startup_name": "MedLink",
-    "logoURL": "/images/startups/medlink-logo.png",
+    "logoURL": "https://i.ibb.co.com/LhSXhVqq/img3.avif",
     "industry": "HealthTech",
     "description": "Telemedicine platform for specialist consultations.",
     "funding_stage": "Seed",
@@ -28,7 +28,7 @@
   },
   {
     "startup_name": "Learnly",
-    "logoURL": "/images/startups/learnly-logo.png",
+    "logoURL": "https://i.ibb.co.com/xtZzcZ8C/img4.jpg",
     "industry": "EdTech",
     "description": "Adaptive learning tools for K-12 students.",
     "funding_stage": "Series A",
@@ -37,7 +37,7 @@
   },
   {
     "startup_name": "MarketMuse",
-    "logoURL": "/images/startups/marketmuse-logo.png",
+    "logoURL": "https://i.ibb.co.com/VcdpmXSK/img5.jpg",
     "industry": "Marketing",
     "description": "AI-assisted content marketing for startups.",
     "funding_stage": "Pre-Seed",
@@ -46,7 +46,7 @@
   },
   {
     "startup_name": "TransitFlow",
-    "logoURL": "/images/startups/transitflow-logo.png",
+    "logoURL": "https://i.ibb.co.com/Df44wCg4/img6.png",
     "industry": "Mobility",
     "description": "Last-mile delivery optimization for cities.",
     "funding_stage": "Seed",
@@ -55,7 +55,7 @@
   },
   {
     "startup_name": "EcoPack",
-    "logoURL": "/images/startups/ecopack-logo.png",
+    "logoURL": "https://i.ibb.co.com/Z66BGdG8/img7.webp",
     "industry": "Sustainability",
     "description": "Compostable packaging solutions for e-commerce.",
     "funding_stage": "Seed",
@@ -64,7 +64,7 @@
   },
   {
     "startup_name": "DesignHive",
-    "logoURL": "/images/startups/designhive-logo.png",
+    "logoURL": "https://i.ibb.co.com/nM9wc6WW/img8.webp",
     "industry": "Design",
     "description": "On-demand product design for small teams.",
     "funding_stage": "Pre-Seed",
@@ -73,7 +73,7 @@
   },
   {
     "startup_name": "DataBridge",
-    "logoURL": "/images/startups/databridge-logo.png",
+    "logoURL": "https://i.ibb.co.com/nM9wc6WW/img8.webp",
     "industry": "Data",
     "description": "Data integration tools for early-stage startups.",
     "funding_stage": "Series A",
@@ -82,7 +82,7 @@
   },
   {
     "startup_name": "AudibleAI",
-    "logoURL": "/images/startups/audibleai-logo.png",
+    "logoURL": "https://i.ibb.co.com/nM9wc6WW/img8.webp",
     "industry": "AI/ML",
     "description": "Voice-AI assistants for customer support.",
     "funding_stage": "Seed",
@@ -91,7 +91,7 @@
   },
   {
     "startup_name": "ShopLocal",
-    "logoURL": "/images/startups/shoplocal-logo.png",
+    "logoURL": "https://i.ibb.co.com/nM9wc6WW/img8.webp",
     "industry": "RetailTech",
     "description": "Marketplace connecting local artisans with customers.",
     "funding_stage": "Pre-Seed",
@@ -100,7 +100,7 @@
   },
   {
     "startup_name": "PaySwift",
-    "logoURL": "/images/startups/payswift-logo.png",
+    "logoURL": "https://i.ibb.co.com/nM9wc6WW/img8.webp",
     "industry": "Payments",
     "description": "Simplified cross-border payments for SMEs.",
     "funding_stage": "Series A",

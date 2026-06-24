@@ -2,10 +2,8 @@
 
 import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Loader2, LogOut, Shield } from "lucide-react";
+import { Loader2, Shield } from "lucide-react";
 import { useSession } from "@/lib/use-session";
-import { clearAuthToken } from "@/lib/api";
-import { signOut } from "@/lib/auth-client";
 import { DashboardSideNav } from "@/components/dashboard/SideNavbar";
 import { AdminDataProvider } from "./_components/admin-data";
 
@@ -40,20 +38,6 @@ function AuthShell({ children }) {
 
   const payment = searchParams.get("payment");
 
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-    } catch (e) {
-      console.error("sign-out failed", e);
-    }
-    clearAuthToken();
-    try {
-      localStorage.removeItem("user");
-    } catch {}
-    window.dispatchEvent(new Event("auth-change"));
-    router.push("/");
-  };
-
   return (
     <AdminDataProvider>
       <div className="flex min-h-screen bg-zinc-950 text-white">
@@ -64,22 +48,14 @@ function AuthShell({ children }) {
               Payment received.
             </div>
           )}
-          <header className="flex items-center justify-between border-b border-white/10 bg-zinc-950/60 px-6 py-3 backdrop-blur">
-            <div className="flex items-center gap-3">
-              <Shield className="h-5 w-5 text-rose-300" />
-              <div>
-                <p className="text-xs uppercase tracking-wider text-zinc-500">
-                  Admin workspace
-                </p>
-                <p className="font-bold">{user.name || user.email}</p>
-              </div>
+          <header className="flex items-center gap-3 border-b border-white/10 bg-zinc-950/60 px-6 py-3 backdrop-blur">
+            <Shield className="h-5 w-5 text-rose-300" />
+            <div>
+              <p className="text-xs uppercase tracking-wider text-zinc-500">
+                Admin workspace
+              </p>
+              <p className="font-bold">{user.name || user.email}</p>
             </div>
-            <button
-              onClick={handleSignOut}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-semibold text-zinc-300 transition hover:bg-white/5"
-            >
-              <LogOut size={14} /> Sign out
-            </button>
           </header>
           <main className="flex-1 overflow-y-auto p-6">{children}</main>
         </div>

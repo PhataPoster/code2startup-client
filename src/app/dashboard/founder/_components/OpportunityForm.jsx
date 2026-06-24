@@ -42,8 +42,20 @@ export default function OpportunityForm({
     if (typeof raw === "string") return raw;
     return "";
   })();
+
+  // Only Active startups are eligible to host opportunities. Pending /
+  // Removed startups are hidden from the dropdown (and the form refuses to
+  // submit if a stale value sneaks in via edit-of-an-existing-opp).
+  const approvedStartups = startups.filter((s) => s.status === "Active");
+  const pendingStartupsCount = startups.filter(
+    (s) => s.status === "Pending"
+  ).length;
   const [form, setForm] = useState({
-    startup_id: initial?.startup_id || startups[0]?._id || "",
+    startup_id:
+      initial?.startup_id ||
+      approvedStartups.find((s) => s._id === initial?.startup_id)?._id ||
+      approvedStartups[0]?._id ||
+      "",
     role_title: initial?.role_title || "",
     required_skills: initialSkills,
     work_type: initial?.work_type || "Full-time",
@@ -60,8 +72,14 @@ export default function OpportunityForm({
   const submit = (e) => {
     e.preventDefault();
     setError("");
-    if (!form.startup_id)
-      return setError("Please create a startup first before adding an opportunity.");
+    if (approvedStartups.length === 0)
+      return setError(
+        pendingStartupsCount > 0
+          ? "Your startup is awaiting admin approval. You can post opportunities once approved."
+          : "Please create a startup first before adding an opportunity."
+      );
+    if (!form.startup_id || !approvedStartups.some((s) => s._id === form.startup_id))
+      return setError("Selected startup is not approved yet.");
     if (!form.role_title.trim()) return setError("Role title is required.");
     onSubmit({
       startup_id: form.startup_id,
@@ -96,9 +114,13 @@ export default function OpportunityForm({
         </button>
       </div>
 
-      {startups.length === 0 ? (
+      {approvedStartups.length === 0 ? (
         <p className="rounded-lg border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-200">
-          You need to create at least one startup before posting opportunities.
+          {pendingStartupsCount > 0
+            ? `Your startup${
+                pendingStartupsCount === 1 ? " is" : "s are"
+              } awaiting admin approval. You can post opportunities once approved.`
+            : "You need to create at least one startup before posting opportunities."}
         </p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
@@ -109,12 +131,24 @@ export default function OpportunityForm({
               onChange={(e) => update("startup_id", e.target.value)}
               className="w-full rounded-lg border border-white/10 bg-zinc-900/60 px-4 py-2 text-white focus:border-orange-400 focus:outline-none"
             >
-              {startups.map((s) => (
+              {approvedStartups.length === 0 && (
+                <option value="" disabled>
+                  No approved startups yet
+                </option>
+              )}
+              {approvedStartups.map((s) => (
                 <option key={s._id} value={s._id}>
                   {s.startup_name}
                 </option>
               ))}
             </select>
+            {pendingStartupsCount > 0 && (
+              <p className="mt-1.5 text-[11px] text-amber-300/80">
+                {pendingStartupsCount} of your startup
+                {pendingStartupsCount === 1 ? " is" : "s are"} awaiting admin
+                approval and hidden from this list.
+              </p>
+            )}
           </Field>
 
           <Field label="Role Title *" full>
@@ -200,7 +234,7 @@ export default function OpportunityForm({
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
         <button
           type="submit"
-          disabled={busy || startups.length === 0}
+          disabled={busy || approvedStartups.length === 0}
           className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 font-bold text-white transition hover:bg-emerald-600 disabled:opacity-60"
         >
           {busy && <Loader2 size={16} className="animate-spin" />}

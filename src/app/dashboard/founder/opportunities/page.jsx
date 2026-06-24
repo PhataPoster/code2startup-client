@@ -12,6 +12,8 @@ export default function FounderOpportunitiesPage() {
     hitsFreeLimit,
     isPremium,
     FREE_OPP_LIMIT,
+    hasApprovedStartup,
+    pendingStartups,
     submitOpportunity,
     deleteOpportunity,
     loading,
@@ -35,7 +37,12 @@ export default function FounderOpportunitiesPage() {
         <h1 className="text-2xl font-bold">Manage Opportunities</h1>
         <button
           onClick={() => setEditing("new")}
-          disabled={hitsFreeLimit}
+          disabled={hitsFreeLimit || !hasApprovedStartup}
+          title={
+            !hasApprovedStartup
+              ? "Awaiting admin approval of your startup"
+              : undefined
+          }
           className="rounded-lg bg-linear-to-r from-orange-500 to-amber-500 px-4 py-2 text-sm font-bold text-zinc-950 transition hover:from-orange-400 hover:to-amber-400 disabled:cursor-not-allowed disabled:from-zinc-700 disabled:to-zinc-700 disabled:text-zinc-400"
         >
           + Add opportunity
@@ -54,6 +61,14 @@ export default function FounderOpportunitiesPage() {
           </a>
         )}
       </p>
+
+      {!hasApprovedStartup && (
+        <div className="rounded-lg border border-amber-400/40 bg-amber-500/10 p-3 text-sm text-amber-200">
+          {pendingStartups > 0
+            ? `Your startup is awaiting admin approval. You can post opportunities once an admin approves it (${pendingStartups} pending).`
+            : "You don't have an approved startup yet. Create one and an admin will review it before you can post opportunities."}
+        </div>
+      )}
 
       {editing !== null && startups.length === 0 ? (
         <p className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-200">
