@@ -69,8 +69,8 @@ export default function FounderApplicationsPage() {
                   <ApplicationRow
                     key={app._id}
                     application={app}
-                    onStatusChange={(status) =>
-                      updateApplicationStatus(app._id, status)
+                    onChanged={(id, status) =>
+                      updateApplicationStatus(id, status)
                     }
                   />
                 ))}

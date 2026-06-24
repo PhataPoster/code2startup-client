@@ -22,8 +22,8 @@ export function CollabDataProvider({ children }) {
         api.get("/applications/me"),
         api.get("/opportunities?status=open&limit=50"),
       ]);
-      setApplications(myApps?.applications || myApps || []);
-      setOpportunities(open?.opportunities || open || []);
+      setApplications(myApps?.data || myApps?.applications || []);
+      setOpportunities(open?.data || open?.opportunities || []);
     } catch (err) {
       setError(err?.message || "Failed to load dashboard data");
     } finally {
@@ -32,8 +32,9 @@ export function CollabDataProvider({ children }) {
   }, [user]);
 
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     fetchAll();
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [fetchAll]);
 
   const submitApplication = useCallback(
