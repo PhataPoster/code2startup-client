@@ -18,6 +18,7 @@ export default function AdminStartupsPage() {
     opportunities,
     toggleStartupStatus,
     moderateOpportunity,
+    deleteStartup,
     loading,
     error,
     refresh,
@@ -126,6 +127,24 @@ export default function AdminStartupsPage() {
       message: res?.ok
         ? `"${startup.startup_name}" returned to Pending.`
         : res?.error?.message || "Failed to update startup.",
+    });
+  };
+
+  const handleDelete = async (startup) => {
+    if (
+      !confirm(
+        `Permanently delete "${startup.startup_name}"? This will also remove its opportunities and any applications they received. This cannot be undone.`
+      )
+    )
+      return;
+    setBusyStartupId(startup._id);
+    const res = await deleteStartup(startup);
+    setBusyStartupId(null);
+    setToast({
+      type: res?.ok ? "success" : "error",
+      message: res?.ok
+        ? `"${startup.startup_name}" was permanently deleted.`
+        : res?.error?.message || "Failed to delete startup.",
     });
   };
 
@@ -243,6 +262,7 @@ export default function AdminStartupsPage() {
                 onApprove={() => handleApprove(s)}
                 onRemove={() => handleRemove(s)}
                 onReactivate={() => handleReactivate(s)}
+                onDelete={() => handleDelete(s)}
                 onToggleOpp={handleToggleOpp}
                 busyOppId={busyOppId}
               />

@@ -194,6 +194,28 @@ export function AdminDataProvider({ children }) {
     [fetchAll]
   );
 
+  const deleteStartup = useCallback(
+    async (startup) => {
+      if (!startup?._id)
+        return { ok: false, error: new Error("Missing startup id") };
+      try {
+        // Server: DELETE /admin/startups/:id (cascades to opps + applications)
+        await api.delete(`/admin/startups/${startup._id}`);
+        // Optimistic local removal so the card disappears instantly.
+        setStartups((prev) => prev.filter((s) => s._id !== startup._id));
+        setOpportunities((prev) =>
+          prev.filter((o) => o.startup_id !== startup._id)
+        );
+        // Re-sync with the server to pick up cascading deletes.
+        await fetchAll();
+        return { ok: true };
+      } catch (err) {
+        return { ok: false, error: err };
+      }
+    },
+    [fetchAll]
+  );
+
   const stats = {
     users: usersTotal,
     founders: users.filter((u) => u.role === "founder").length,
@@ -224,6 +246,7 @@ export function AdminDataProvider({ children }) {
         toggleUserBlock,
         toggleStartupStatus,
         moderateOpportunity,
+        deleteStartup,
       }}
     >
       {children}

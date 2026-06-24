@@ -1,6 +1,14 @@
 "use client";
 
-import { Check, X, ExternalLink, Loader2, Building2, RotateCcw } from "lucide-react";
+import {
+  Check,
+  X,
+  ExternalLink,
+  Loader2,
+  Building2,
+  RotateCcw,
+  Trash2,
+} from "lucide-react";
 
 const STATUS_STYLES = {
   Active: "border-emerald-400/30 bg-emerald-500/15 text-emerald-200",
@@ -14,6 +22,7 @@ export default function StartupModerationCard({
   onApprove,
   onRemove,
   onReactivate,
+  onDelete,
   onToggleOpp,
   busy,
   busyOppId,
@@ -71,7 +80,55 @@ export default function StartupModerationCard({
         >
           <ExternalLink size={12} /> View
         </a>
-        {startup.status === "Removed" && onReactivate ? (
+
+        {startup.status === "Pending" && (
+          <>
+            <button
+              type="button"
+              onClick={() => onApprove?.(startup)}
+              disabled={busy}
+              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-emerald-400/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-500/20 disabled:opacity-60"
+            >
+              {busy ? (
+                <Loader2 size={12} className="animate-spin" />
+              ) : (
+                <Check size={12} />
+              )}
+              Approve
+            </button>
+            <button
+              type="button"
+              onClick={() => onRemove?.(startup)}
+              disabled={busy}
+              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-rose-400/30 bg-rose-500/10 px-3 py-1.5 text-xs font-semibold text-rose-200 transition hover:bg-rose-500/20 disabled:opacity-60"
+            >
+              {busy ? (
+                <Loader2 size={12} className="animate-spin" />
+              ) : (
+                <X size={12} />
+              )}
+              Reject
+            </button>
+          </>
+        )}
+
+        {startup.status === "Active" && onDelete && (
+          <button
+            type="button"
+            onClick={() => onDelete(startup)}
+            disabled={busy}
+            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-rose-400/30 bg-rose-500/10 px-3 py-1.5 text-xs font-semibold text-rose-200 transition hover:bg-rose-500/20 disabled:opacity-60"
+          >
+            {busy ? (
+              <Loader2 size={12} className="animate-spin" />
+            ) : (
+              <Trash2 size={12} />
+            )}
+            Delete
+          </button>
+        )}
+
+        {startup.status === "Removed" && onReactivate && (
           <button
             type="button"
             onClick={() => onReactivate(startup)}
@@ -85,35 +142,6 @@ export default function StartupModerationCard({
             )}
             Reactivate
           </button>
-        ) : (
-          <>
-            <button
-              type="button"
-              onClick={() => onApprove(startup)}
-              disabled={busy || startup.status === "Active"}
-              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-emerald-400/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-500/20 disabled:opacity-60"
-            >
-              {busy ? (
-                <Loader2 size={12} className="animate-spin" />
-              ) : (
-                <Check size={12} />
-              )}
-              {startup.status === "Active" ? "Active" : "Approve"}
-            </button>
-            <button
-              type="button"
-              onClick={() => onRemove(startup)}
-              disabled={busy || startup.status === "Removed"}
-              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-rose-400/30 bg-rose-500/10 px-3 py-1.5 text-xs font-semibold text-rose-200 transition hover:bg-rose-500/20 disabled:opacity-60"
-            >
-              {busy ? (
-                <Loader2 size={12} className="animate-spin" />
-              ) : (
-                <X size={12} />
-              )}
-              {startup.status === "Removed" ? "Removed" : "Remove"}
-            </button>
-          </>
         )}
       </div>
 
