@@ -52,8 +52,10 @@ export function FounderDataProvider({ user, children }) {
   }, [user]);
 
   useEffect(() => {
-    if (user?.role === "founder") fetchAll();
+    // Data-fetch effect — calling setState when the response arrives is
+    // exactly the "sync with external system" pattern the rule allows.
     // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (user?.role === "founder") fetchAll();
   }, [user, fetchAll]);
 
   const stats = useMemo(
@@ -69,14 +71,15 @@ export function FounderDataProvider({ user, children }) {
   const hitsFreeLimit = opportunities.length >= FREE_OPP_LIMIT && !isPremium;
 
   // ===== Startup handlers =====
+  // `target` is the startup being edited, or `null` to create a new one.
   const submitStartup = useCallback(
-    async (mode, payload) => {
+    async (target, payload) => {
       setError("");
       try {
-        if (mode === "new") {
+        if (target && target._id) {
+          await api.put(`/startups/${target._id}`, payload);
+        } else {
           await api.post("/startups", payload);
-        } else if (mode && mode._id) {
-          await api.put(`/startups/${mode._id}`, payload);
         }
         await fetchAll();
         return { ok: true };
@@ -103,14 +106,15 @@ export function FounderDataProvider({ user, children }) {
   );
 
   // ===== Opportunity handlers =====
+  // `target` is the opportunity being edited, or `null` to create a new one.
   const submitOpportunity = useCallback(
-    async (mode, payload) => {
+    async (target, payload) => {
       setError("");
       try {
-        if (mode === "new") {
+        if (target && target._id) {
+          await api.put(`/opportunities/${target._id}`, payload);
+        } else {
           await api.post("/opportunities", payload);
-        } else if (mode && mode._id) {
-          await api.put(`/opportunities/${mode._id}`, payload);
         }
         await fetchAll();
         return { ok: true };

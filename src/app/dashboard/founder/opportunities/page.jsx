@@ -17,7 +17,8 @@ export default function FounderOpportunitiesPage() {
     loading,
     error,
   } = useFounderData();
-  const [editing, setEditing] = useState(null);
+  const [editing, setEditing] = useState(null); // null = list, "new" = create form, opp obj = edit form
+  const [busy, setBusy] = useState(false);
 
   if (loading)
     return <p className="text-sm text-zinc-400">Loading opportunities…</p>;
@@ -65,9 +66,18 @@ export default function FounderOpportunitiesPage() {
           initial={editing === "new" ? null : editing}
           startups={startups}
           onCancel={() => setEditing(null)}
+          busy={busy}
           onSubmit={async (payload) => {
-            await submitOpportunity(editing === "new" ? "new" : "edit", payload);
-            setEditing(null);
+            setBusy(true);
+            try {
+              // editing === "new"  -> create (target=null)
+              // editing === opp    -> update (target=opp)
+              const target = editing === "new" ? null : editing;
+              const res = await submitOpportunity(target, payload);
+              if (res?.ok !== false) setEditing(null);
+            } finally {
+              setBusy(false);
+            }
           }}
         />
       )}

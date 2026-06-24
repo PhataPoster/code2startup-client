@@ -41,8 +41,11 @@ export default function FounderStartupsPage() {
           onSubmit={async (payload) => {
             setBusy(true);
             try {
-              await submitStartup(editing === "new" ? "new" : "edit", payload);
-              setEditing(null);
+              // editing === "new"  -> create (target=null)
+              // editing === startup -> update (target=startup)
+              const target = editing === "new" ? null : editing;
+              const res = await submitStartup(target, payload);
+              if (res?.ok !== false) setEditing(null);
             } finally {
               setBusy(false);
             }

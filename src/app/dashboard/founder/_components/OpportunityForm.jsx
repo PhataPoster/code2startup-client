@@ -3,6 +3,14 @@
 import { useState } from "react";
 import { X, Loader2 } from "lucide-react";
 
+// 30 days from now, in yyyy-mm-dd format. Computed once at module load —
+// pure, deterministic, and never returns a different value across re-renders.
+function defaultDeadline() {
+  const d = new Date();
+  d.setDate(d.getDate() + 30);
+  return d.toISOString().slice(0, 10);
+}
+
 const WORK_TYPES = ["Full-time", "Part-time", "Contract", "Internship"];
 const COMMITMENT_LEVELS = ["Full-time", "Part-time", "Casual"];
 const INDUSTRIES = [
@@ -22,18 +30,28 @@ export default function OpportunityForm({
   onCancel,
   busy,
 }) {
+  // Normalize required_skills to a string whether it came back as an array,
+  // a comma-separated string, or undefined — otherwise the <input> becomes
+  // a controlled-component error.
+  // Normalize required_skills to a string whether it came back as an array,
+  // a comma-separated string, or undefined — otherwise the <input> becomes
+  // a controlled-component error.
+  const initialSkills = (() => {
+    const raw = initial?.required_skills;
+    if (Array.isArray(raw)) return raw.join(", ");
+    if (typeof raw === "string") return raw;
+    return "";
+  })();
   const [form, setForm] = useState({
     startup_id: initial?.startup_id || startups[0]?._id || "",
     role_title: initial?.role_title || "",
-    required_skills: initial?.required_skills || "",
+    required_skills: initialSkills,
     work_type: initial?.work_type || "Full-time",
     commitment_level: initial?.commitment_level || "Full-time",
     industry: initial?.industry || "General",
     deadline: initial?.deadline
       ? new Date(initial.deadline).toISOString().slice(0, 10)
-      : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10),
+      : defaultDeadline(),
   });
   const [error, setError] = useState("");
 
