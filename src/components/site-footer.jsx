@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Heart,
   Mail,
@@ -8,6 +9,8 @@ import {
 } from "lucide-react";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { BrandMark } from "./brand-mark";
+
+const DASHBOARD_PREFIXES = ["/dashboard"];
 
 const footerLinks = [
   {
@@ -47,6 +50,11 @@ const socialLinks = [
 ];
 
 export function SiteFooter() {
+  const pathname = usePathname() || "/";
+  const onDashboardRoute = DASHBOARD_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+  );
+  if (onDashboardRoute) return null;
   return (
     <footer className="border-t border-white/10 bg-zinc-950/50 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">

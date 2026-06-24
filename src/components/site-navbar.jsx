@@ -153,6 +153,11 @@ export function SiteNavbar() {
     [user?.name, user?.email]
   );
 
+  // On dashboard routes the side-nav owns navigation, the brand mark is
+  // already shown there, and the side-nav has its own logout. The top bar
+  // would just duplicate all of that, so render nothing here.
+  if (onDashboardRoute) return null;
+
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-zinc-950/75 backdrop-blur-2xl">
       <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4 lg:px-8">

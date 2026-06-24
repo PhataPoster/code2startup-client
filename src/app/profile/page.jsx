@@ -274,15 +274,15 @@ export default function ProfilePage() {
 
         <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl shadow-black/40">
           {/* Hero / cover */}
-          <div className="relative h-32 bg-linear-to-r from-orange-500 via-amber-400 to-rose-500 sm:h-40">
+          <div className="relative h-28 bg-linear-to-r from-orange-500 via-amber-400 to-rose-500 sm:h-36">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_60%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,0,0,0.25),transparent_55%)]" />
           </div>
 
           <div className="px-6 pb-8 sm:px-8">
             {/* Avatar + name + role */}
-            <div className="-mt-14 flex flex-col items-start gap-4 sm:-mt-16 sm:flex-row sm:items-end sm:justify-between">
-              <div className="flex items-end gap-4">
+            <div className="flex flex-col gap-5 pt-6 sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:pt-8">
+              <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
                 <div className="relative flex h-24 w-24 shrink-0 items-center justify-center rounded-3xl border-4 border-zinc-950 bg-linear-to-br from-orange-500 to-amber-400 text-2xl font-black text-white shadow-xl shadow-orange-500/30 sm:h-28 sm:w-28 sm:text-3xl">
                   {display.image ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -295,14 +295,14 @@ export default function ProfilePage() {
                     initials
                   )}
                 </div>
-                <div className="pb-1">
-                  <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
+                <div className="min-w-0 flex-1">
+                  <h1 className="break-words text-2xl font-black leading-tight tracking-tight text-white sm:text-3xl">
                     {displayName || "Your profile"}
                   </h1>
                   <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-zinc-400">
-                    <span className="inline-flex items-center gap-1.5">
-                      <Mail className="h-3.5 w-3.5" />
-                      {display.email || "—"}
+                    <span className="inline-flex min-w-0 max-w-full items-center gap-1.5 break-all">
+                      <Mail className="h-3.5 w-3.5 shrink-0" />
+                      <span className="truncate">{display.email || "—"}</span>
                     </span>
                     {memberSince && (
                       <span className="inline-flex items-center gap-1.5">
@@ -314,7 +314,7 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 sm:shrink-0 sm:justify-end">
                 <span
                   className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wider ${badge.className}`}
                 >
