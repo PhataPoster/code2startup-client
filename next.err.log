@@ -1,0 +1,813 @@
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⚠ ./tailwind.config.js:2:20
+Module not found: Can't resolve '@heroui/react'
+  [90m1 |[0m [90m/** @type {import('tailwindcss').Config} */[0m
+[31m[1m>[0m [90m2 |[0m [36mconst[0m { heroui } = require([32m"@heroui/react"[0m);
+  [90m  |[0m                    [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m [90m// Legacy config — Tailwind v4 reads CSS-first via @theme, but keep this for[0m
+  [90m5 |[0m [90m// HeroUI plugin + older integrations. Safe to keep in v4.[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+^C

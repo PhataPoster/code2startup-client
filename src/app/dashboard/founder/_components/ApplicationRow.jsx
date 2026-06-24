@@ -5,9 +5,15 @@ import { Check, X, ExternalLink, Loader2 } from "lucide-react";
 import { api } from "@/lib/api";
 
 const STATUS_STYLES = {
-  Pending: "border-amber-400/30 bg-amber-500/10 text-amber-200",
-  Accepted: "border-emerald-400/30 bg-emerald-500/10 text-emerald-200",
-  Rejected: "border-rose-400/30 bg-rose-500/10 text-rose-200",
+  pending: "border-amber-400/30 bg-amber-500/10 text-amber-200",
+  accepted: "border-emerald-400/30 bg-emerald-500/10 text-emerald-200",
+  rejected: "border-rose-400/30 bg-rose-500/10 text-rose-200",
+};
+
+const STATUS_LABELS = {
+  pending: "Pending",
+  accepted: "Accepted",
+  rejected: "Rejected",
 };
 
 export default function ApplicationRow({ application, onChanged }) {
@@ -51,10 +57,10 @@ export default function ApplicationRow({ application, onChanged }) {
         <div className="flex items-center gap-2">
           <span
             className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-              STATUS_STYLES[application.status] || STATUS_STYLES.Pending
+              STATUS_STYLES[application.status] || STATUS_STYLES.pending
             }`}
           >
-            {application.status}
+            {STATUS_LABELS[application.status] || application.status}
           </span>
         </div>
       </div>
@@ -63,11 +69,11 @@ export default function ApplicationRow({ application, onChanged }) {
         <p className="mt-2 text-xs text-rose-300">{error}</p>
       )}
 
-      {application.status === "Pending" && (
+      {application.status === "pending" && (
         <div className="mt-3 flex flex-wrap gap-2">
           <button
             type="button"
-            onClick={() => setStatus("Accepted")}
+            onClick={() => setStatus("accepted")}
             disabled={busy}
             className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-emerald-400/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-500/20 disabled:opacity-60"
           >
@@ -76,7 +82,7 @@ export default function ApplicationRow({ application, onChanged }) {
           </button>
           <button
             type="button"
-            onClick={() => setStatus("Rejected")}
+            onClick={() => setStatus("rejected")}
             disabled={busy}
             className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-rose-400/30 bg-rose-500/10 px-3 py-1.5 text-xs font-semibold text-rose-200 transition hover:bg-rose-500/20 disabled:opacity-60"
           >

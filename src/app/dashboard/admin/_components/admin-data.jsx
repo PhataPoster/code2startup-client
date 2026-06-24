@@ -24,12 +24,12 @@ export function AdminDataProvider({ children }) {
         api.get("/users"),
         api.get("/startups"),
         api.get("/opportunities?limit=200"),
-        api.get("/payments/admin").catch(() => []),
+        api.get("/payments").catch(() => ({ data: [] })),
       ]);
-      setUsers(u?.users || u || []);
-      setStartups(s?.startups || s || []);
-      setOpportunities(o?.opportunities || o || []);
-      setPayments(Array.isArray(p) ? p : p?.payments || []);
+      setUsers(u?.data || u?.users || []);
+      setStartups(s?.data || s?.startups || []);
+      setOpportunities(o?.data || o?.opportunities || []);
+      setPayments(p?.data || []);
     } catch (err) {
       setError(err?.message || "Failed to load admin data");
     } finally {
@@ -43,8 +43,11 @@ export function AdminDataProvider({ children }) {
   }, [fetchAll]);
 
   const updateUserRole = useCallback(
-    async (userId, role) => {
-      await api.put(`/users/${userId}/role`, { role });
+    async (user, role) => {
+      // Server route is keyed by email, not by id.
+      const email = typeof user === "string" ? user : user?.email;
+      if (!email) throw new Error("Missing user email");
+      await api.put(`/users/${encodeURIComponent(email)}/role`, { role });
       await fetchAll();
     },
     [fetchAll]
@@ -52,8 +55,9 @@ export function AdminDataProvider({ children }) {
 
   const toggleStartupStatus = useCallback(
     async (startup) => {
-      const next = startup.status === "active" ? "paused" : "active";
-      await api.put(`/startups/${startup._id}/status`, { status: next });
+      const next = startup.status === "Active" ? "Pending" : "Active";
+      // Server has /admin/startups/:id/status (not /startups/:id/status)
+      await api.put(`/admin/startups/${startup._id}/status`, { status: next });
       await fetchAll();
     },
     [fetchAll]
@@ -62,7 +66,8 @@ export function AdminDataProvider({ children }) {
   const moderateOpportunity = useCallback(
     async (opp) => {
       const next = opp.status === "open" ? "closed" : "open";
-      await api.put(`/opportunities/${opp._id}/status`, { status: next });
+      // Server has /admin/opportunities/:id/status
+      await api.put(`/admin/opportunities/${opp._id}/status`, { status: next });
       await fetchAll();
     },
     [fetchAll]

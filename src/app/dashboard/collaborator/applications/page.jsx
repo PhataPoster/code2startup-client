@@ -30,6 +30,7 @@ export default function CollaboratorApplicationsPage() {
             <ApplicationCard
               key={app._id}
               application={app}
+              opportunity={app.opportunity}
               onWithdraw={async () => {
                 if (!confirm("Withdraw this application?")) return;
                 await withdrawApplication(app);

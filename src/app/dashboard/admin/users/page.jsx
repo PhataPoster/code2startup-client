@@ -34,7 +34,7 @@ export default function AdminUsersPage() {
               <UserRow
                 key={u._id}
                 user={u}
-                onChangeRole={(role) => updateUserRole(u._id, role)}
+                onChangeRole={(role) => updateUserRole(u, role)}
               />
             ))}
           </tbody>

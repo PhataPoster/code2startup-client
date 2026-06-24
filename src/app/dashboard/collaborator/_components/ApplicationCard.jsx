@@ -3,9 +3,11 @@
 import { ExternalLink, X, Briefcase, Calendar } from "lucide-react";
 
 const STATUS_STYLES = {
-  Pending: "border-amber-400/30 bg-amber-500/10 text-amber-200",
-  Accepted: "border-emerald-400/30 bg-emerald-500/10 text-emerald-200",
-  Rejected: "border-rose-400/30 bg-rose-500/10 text-rose-200",
+  pending: "border-amber-400/30 bg-amber-500/10 text-amber-200",
+  reviewing: "border-sky-400/30 bg-sky-500/10 text-sky-200",
+  accepted: "border-emerald-400/30 bg-emerald-500/10 text-emerald-200",
+  rejected: "border-rose-400/30 bg-rose-500/10 text-rose-200",
+  withdrawn: "border-zinc-400/30 bg-zinc-500/10 text-zinc-200",
 };
 
 export default function ApplicationCard({
@@ -15,6 +17,9 @@ export default function ApplicationCard({
   busy,
 }) {
   const startup = opportunity?.startup || opportunity?.startup_snapshot;
+  const appliedAt = application.applied_at
+    ? new Date(application.applied_at).toLocaleDateString()
+    : "";
   return (
     <div className="flex flex-col rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-orange-400/30">
       <div className="flex items-start justify-between gap-3">
@@ -30,7 +35,7 @@ export default function ApplicationCard({
         </div>
         <span
           className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-            STATUS_STYLES[application.status] || STATUS_STYLES.Pending
+            STATUS_STYLES[application.status] || STATUS_STYLES.pending
           }`}
         >
           {application.status}
@@ -63,7 +68,7 @@ export default function ApplicationCard({
       <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-white/5 pt-4 text-xs text-zinc-400">
         <span className="inline-flex items-center gap-1.5">
           <Calendar size={12} />
-          Applied {new Date(application.applied_at || Date.now()).toLocaleDateString()}
+          Applied {appliedAt}
         </span>
         {opportunity?._id && (
           <a
@@ -77,7 +82,7 @@ export default function ApplicationCard({
         )}
       </div>
 
-      {application.status === "Pending" && onWithdraw && (
+      {application.status === "pending" && onWithdraw && (
         <button
           type="button"
           onClick={() => onWithdraw(application)}

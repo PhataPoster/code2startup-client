@@ -60,7 +60,7 @@ export function FounderDataProvider({ user, children }) {
     () => ({
       startups: startups.length,
       opportunities: opportunities.length,
-      pendingApps: applications.filter((a) => a.status === "Pending").length,
+      pendingApps: applications.filter((a) => a.status === "pending").length,
       totalApps: applications.length,
     }),
     [startups, opportunities, applications]

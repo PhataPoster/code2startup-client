@@ -107,15 +107,26 @@ export default function ProfilePage() {
     /* eslint-enable react-hooks/set-state-in-effect */
   }, [user]);
 
+  // Always prefer the fresh DB profile over the Better Auth session snapshot.
+  // If neither has loaded yet, fall back to a safe empty object.
   const display = profile || user || {};
   const role = display.role || "collaborator";
   const badge = ROLE_BADGE[role] || ROLE_BADGE.collaborator;
   const status = display.isBlocked ? "blocked" : "active";
   const statusBadge = STATUS_BADGE[status];
 
+  // Resolve the display name once per render so header and detail card agree.
+  // We only treat `name` as present when it's a non-empty string — guards
+  // against Better Auth returning `null` after a profile edit wiped it.
+  const displayName = useMemo(() => {
+    const n = display.name;
+    if (typeof n === "string" && n.trim()) return n.trim();
+    return display.email || "";
+  }, [display.name, display.email]);
+
   const initials = useMemo(
-    () => getInitials(display.name, display.email),
-    [display.name, display.email]
+    () => getInitials(displayName, display.email),
+    [displayName, display.email]
   );
 
   const dashboardHref =
@@ -137,7 +148,7 @@ export default function ProfilePage() {
   }, [display.createdAt, display.created_at]);
 
   const openEditor = () => {
-    setEditName(display.name || "");
+    setEditName(displayName || "");
     setEditImage(display.image || "");
     setEditBio(display.bio || "");
     setEditSkills(
@@ -277,7 +288,7 @@ export default function ProfilePage() {
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={display.image}
-                      alt={display.name || "Profile"}
+                      alt={displayName || "Profile"}
                       className="h-full w-full rounded-3xl object-cover"
                     />
                   ) : (
@@ -286,7 +297,7 @@ export default function ProfilePage() {
                 </div>
                 <div className="pb-1">
                   <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
-                    {display.name || display.email || "Your profile"}
+                    {displayName || "Your profile"}
                   </h1>
                   <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-zinc-400">
                     <span className="inline-flex items-center gap-1.5">
@@ -358,7 +369,7 @@ export default function ProfilePage() {
               <DetailCard
                 icon={UserCircle2}
                 label="Display name"
-                value={display.name || "Not set"}
+                value={displayName || "Not set"}
               />
               <DetailCard
                 icon={Mail}
