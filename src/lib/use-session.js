@@ -18,7 +18,22 @@ export function useSession() {
     setError(null);
     try {
       const res = await authClient.getSession();
-      setUser(res?.data?.user ?? null);
+      const next = res?.data?.user ?? null;
+      // Treat blocked accounts as signed-out: drop the cached user, clear
+      // local storage, and let the layout redirect to /login. This stops
+      // already-logged-in blocked users from continuing to interact with
+      // the app via the cached client session.
+      if (next?.isBlocked) {
+        try {
+          localStorage.removeItem("code2startup_token");
+        } catch {
+          /* ignore */
+        }
+        await authClient.signOut().catch(() => null);
+        setUser(null);
+        return;
+      }
+      setUser(next);
     } catch (err) {
       setError(err);
       setUser(null);

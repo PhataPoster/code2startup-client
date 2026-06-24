@@ -6,6 +6,7 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { jwt } from "better-auth/plugins";
+import { createAuthMiddleware, APIError } from "better-auth/api";
 import { MongoClient } from "mongodb";
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -65,6 +66,39 @@ export const auth = betterAuth({
         },
       },
     },
+  },
+
+  // Block sign-in (and social callbacks) for accounts the admin has blocked.
+  // The hook looks the user up by email and rejects with a 403 if isBlocked
+  // is true. Existing sessions are revoked by `revokeBlockedSessions` below,
+  // and every API route already re-reads `isBlocked` via requireAuth.
+  hooks: {
+    before: createAuthMiddleware(async (ctx) => {
+      const path = ctx.path || "";
+      const isSignIn =
+        path === "/sign-in/email" ||
+        path === "/sign-in/social" ||
+        path.startsWith("/callback/");
+      if (!isSignIn) return;
+
+      // /sign-in/email puts email on ctx.body; social callbacks put it on
+      // the query string (state.token) — try body first, fall back to query.
+      const email =
+        ctx.body?.email ||
+        ctx.query?.email ||
+        ctx.query?.id_token?.email ||
+        null;
+      if (!email) return; // let Better Auth handle the missing-email error
+
+      const lookup = await ctx.context.internalAdapter.findUserByEmail(
+        String(email).toLowerCase()
+      );
+      if (lookup?.user?.isBlocked) {
+        throw new APIError("FORBIDDEN", {
+          message: "Your account has been blocked. Contact support.",
+        });
+      }
+    }),
   },
 
   // Google OAuth — only enabled when keys are present so local dev without keys still works.

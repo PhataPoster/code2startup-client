@@ -1,6 +1,6 @@
 "use client";
 
-import { Shield, ShieldOff, Crown, User as UserIcon, Briefcase } from "lucide-react";
+import { Shield, ShieldOff, Crown, User as UserIcon, Briefcase, Loader2 } from "lucide-react";
 
 const ROLE_ICONS = {
   admin: Crown,
@@ -17,7 +17,10 @@ const ROLE_STYLES = {
 export default function UserRow({ user, onBlock, onChangeRole, busy }) {
   const Icon = ROLE_ICONS[user.role] || UserIcon;
   return (
-    <tr className="border-t border-white/10 transition hover:bg-white/2">
+    <tr
+      aria-busy={busy || undefined}
+      className="border-t border-white/10 transition hover:bg-white/2 aria-busy:bg-white/3"
+    >
       <td className="px-6 py-3">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-zinc-800 text-xs font-bold text-white">
@@ -72,15 +75,14 @@ export default function UserRow({ user, onBlock, onChangeRole, busy }) {
                 : "border-rose-400/30 bg-rose-500/10 text-rose-200 hover:bg-rose-500/20"
             }`}
           >
-            {user.isBlocked ? (
-              <>
-                <Shield size={12} /> Unblock
-              </>
+            {busy ? (
+              <Loader2 size={12} className="animate-spin" />
+            ) : user.isBlocked ? (
+              <Shield size={12} />
             ) : (
-              <>
-                <ShieldOff size={12} /> Block
-              </>
+              <ShieldOff size={12} />
             )}
+            {user.isBlocked ? "Unblock" : "Block"}
           </button>
         </div>
       </td>
