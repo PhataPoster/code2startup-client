@@ -5,27 +5,8 @@ import Link from 'next/link';
 import { SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import FormSelect from '@/components/forms/FormSelect';
 import SearchField from '@/components/forms/SearchField';
+import { fetchFilterOptions } from '@/lib/fetch';
 
-const INDUSTRIES = [
-  '',
-  'FinTech',
-  'HealthTech',
-  'EdTech',
-  'AI/ML',
-  'SaaS',
-  'E-commerce',
-  'General',
-];
-const FUNDING_STAGES = [
-  '',
-  'Idea',
-  'Pre-Seed',
-  'Seed',
-  'Series A',
-  'Series B',
-  'Series C+',
-  'Bootstrapped',
-];
 const SORTS = [
   { value: 'newest', label: 'Newest' },
   { value: 'oldest', label: 'Oldest' },
@@ -44,15 +25,59 @@ const BrowseStartups = () => {
   const [pagination, setPagination] = useState({});
   const [error, setError] = useState('');
 
+  // Data-driven dropdown options. Fall back to small hard-coded lists so the
+  // UI still renders if the options endpoint is briefly unreachable.
+  const [industryOptions, setIndustryOptions] = useState([
+    { value: 'FinTech', label: 'FinTech' },
+    { value: 'HealthTech', label: 'HealthTech' },
+    { value: 'EdTech', label: 'EdTech' },
+    { value: 'AI/ML', label: 'AI/ML' },
+    { value: 'SaaS', label: 'SaaS' },
+    { value: 'E-commerce', label: 'E-commerce' },
+    { value: 'General', label: 'General' },
+  ]);
+  const [stageOptions, setStageOptions] = useState([
+    { value: 'Idea', label: 'Idea' },
+    { value: 'Pre-Seed', label: 'Pre-Seed' },
+    { value: 'Seed', label: 'Seed' },
+    { value: 'Series A', label: 'Series A' },
+    { value: 'Series B', label: 'Series B' },
+    { value: 'Series C+', label: 'Series C+' },
+    { value: 'Bootstrapped', label: 'Bootstrapped' },
+  ]);
+
+  // Fetch live dropdown values once on mount.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const opts = await fetchFilterOptions();
+      if (cancelled || !opts) return;
+      if (opts.startup?.industry?.length) {
+        setIndustryOptions(
+          opts.startup.industry.map((o) => ({ value: o.value, label: o.label }))
+        );
+      }
+      if (opts.startup?.funding_stage?.length) {
+        setStageOptions(
+          opts.startup.funding_stage.map((o) => ({ value: o.value, label: o.label }))
+        );
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   // Debounce text search
   const [debouncedSearch, setDebouncedSearch] = useState('');
   useEffect(() => {
-    const t = setTimeout(() => setDebouncedSearch(search), 400);
+    const t = setTimeout(() => setDebouncedSearch(search.trim()), 400);
     return () => clearTimeout(t);
   }, [search]);
 
   const fetchStartups = useCallback(
     async (pg = 1) => {
+      // Public browse page — direct fetch to the Express backend.
       const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
       try {
         setLoading(true);
@@ -148,9 +173,10 @@ const BrowseStartups = () => {
               onChange={(e) => setFilterIndustry(e.target.value)}
               aria-label="Filter by industry"
             >
-              {INDUSTRIES.map((i) => (
-                <option key={i || 'all'} value={i}>
-                  {i ? `Industry: ${i}` : 'All industries'}
+              <option value="">All industries</option>
+              {industryOptions.map((i) => (
+                <option key={i.value} value={i.value}>
+                  {i.label}
                 </option>
               ))}
             </FormSelect>
@@ -173,9 +199,10 @@ const BrowseStartups = () => {
               onChange={(e) => setFilterStage(e.target.value)}
               aria-label="Filter by funding stage"
             >
-              {FUNDING_STAGES.map((f) => (
-                <option key={f || 'all'} value={f}>
-                  {f ? `Funding: ${f}` : 'All funding stages'}
+              <option value="">All funding stages</option>
+              {stageOptions.map((f) => (
+                <option key={f.value} value={f.value}>
+                  {f.label}
                 </option>
               ))}
             </FormSelect>

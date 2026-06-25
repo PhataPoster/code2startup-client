@@ -5,18 +5,8 @@ import Link from 'next/link';
 import { SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import FormSelect from '@/components/forms/FormSelect';
 import SearchField from '@/components/forms/SearchField';
+import { fetchFilterOptions } from '@/lib/fetch';
 
-const WORK_TYPES = ['', 'Full-time', 'Part-time', 'Contract', 'Internship'];
-const INDUSTRIES = [
-  '',
-  'FinTech',
-  'HealthTech',
-  'EdTech',
-  'AI/ML',
-  'SaaS',
-  'E-commerce',
-  'General',
-];
 const SORTS = [
   { value: 'newest', label: 'Newest' },
   { value: 'oldest', label: 'Oldest' },
@@ -36,20 +26,60 @@ const BrowseOpportunities = () => {
   const [pagination, setPagination] = useState({});
   const [error, setError] = useState('');
 
+  // Live dropdown options. Static fallbacks keep the UI usable if the
+  // options endpoint is briefly unreachable.
+  const [workTypeOptions, setWorkTypeOptions] = useState([
+    { value: 'Full-time', label: 'Full-time' },
+    { value: 'Part-time', label: 'Part-time' },
+    { value: 'Contract', label: 'Contract' },
+    { value: 'Internship', label: 'Internship' },
+  ]);
+  const [industryOptions, setIndustryOptions] = useState([
+    { value: 'FinTech', label: 'FinTech' },
+    { value: 'HealthTech', label: 'HealthTech' },
+    { value: 'EdTech', label: 'EdTech' },
+    { value: 'AI/ML', label: 'AI/ML' },
+    { value: 'SaaS', label: 'SaaS' },
+    { value: 'E-commerce', label: 'E-commerce' },
+    { value: 'General', label: 'General' },
+  ]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const opts = await fetchFilterOptions();
+      if (cancelled || !opts) return;
+      if (opts.opportunity?.work_type?.length) {
+        setWorkTypeOptions(
+          opts.opportunity.work_type.map((o) => ({ value: o.value, label: o.label }))
+        );
+      }
+      if (opts.opportunity?.industry?.length) {
+        setIndustryOptions(
+          opts.opportunity.industry.map((o) => ({ value: o.value, label: o.label }))
+        );
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   // Debounce text searches so we don't spam the backend on every keystroke
   const [debouncedRole, setDebouncedRole] = useState('');
   const [debouncedSkills, setDebouncedSkills] = useState('');
   useEffect(() => {
-    const t = setTimeout(() => setDebouncedRole(searchRole), 400);
+    const t = setTimeout(() => setDebouncedRole(searchRole.trim()), 400);
     return () => clearTimeout(t);
   }, [searchRole]);
   useEffect(() => {
-    const t = setTimeout(() => setDebouncedSkills(searchSkills), 400);
+    const t = setTimeout(() => setDebouncedSkills(searchSkills.trim()), 400);
     return () => clearTimeout(t);
   }, [searchSkills]);
 
   const fetchOpportunities = useCallback(
     async (pg = 1) => {
+      // Public browse page — direct fetch to the Express backend.
       const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
       try {
         setLoading(true);
@@ -170,9 +200,10 @@ const BrowseOpportunities = () => {
               onChange={(e) => setFilterWorkType(e.target.value)}
               aria-label="Filter by work type"
             >
-              {WORK_TYPES.map((w) => (
-                <option key={w || 'all'} value={w}>
-                  {w ? `Work type: ${w}` : 'All work types'}
+              <option value="">All work types</option>
+              {workTypeOptions.map((w) => (
+                <option key={w.value} value={w.value}>
+                  {w.label}
                 </option>
               ))}
             </FormSelect>
@@ -181,9 +212,10 @@ const BrowseOpportunities = () => {
               onChange={(e) => setFilterIndustry(e.target.value)}
               aria-label="Filter by industry"
             >
-              {INDUSTRIES.map((i) => (
-                <option key={i || 'all'} value={i}>
-                  {i ? `Industry: ${i}` : 'All industries'}
+              <option value="">All industries</option>
+              {industryOptions.map((i) => (
+                <option key={i.value} value={i.value}>
+                  {i.label}
                 </option>
               ))}
             </FormSelect>

@@ -41,7 +41,10 @@ function FounderLayoutInner({ children }) {
       return;
     }
     if (user.role !== "founder") {
-      router.push("/dashboard");
+      // Surface a dedicated "no access" page instead of silently
+      // redirecting to /dashboard — the user should know *why* they
+      // can't open this area.
+      router.replace(`/unauthorized?from=${encodeURIComponent(pathname)}`);
     }
   }, [user, sessionLoading, router, pathname]);
 

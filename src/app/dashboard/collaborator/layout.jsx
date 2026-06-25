@@ -36,7 +36,14 @@ function AuthShell({ children }) {
   }
 
   if (user.role !== "collaborator") {
-    router.replace(`/dashboard/${user.role || "founder"}`);
+    // Bounce to a dedicated "no access" page so the user understands
+    // *why* they were redirected instead of being silently shipped to
+    // their own dashboard.
+    const from =
+      typeof window !== "undefined"
+        ? encodeURIComponent(window.location.pathname + window.location.search)
+        : "";
+    router.replace(`/unauthorized?from=${from}`);
     return <DashboardSkeleton />;
   }
 

@@ -58,12 +58,50 @@ export function FounderDataProvider({ user, children }) {
     if (user?.role === "founder") fetchAll();
   }, [user, fetchAll]);
 
+  // Per-month series for the "Last 6 months" sparkline trend.
+  // Bins opportunities and applications by createdAt month.
+  const trend = useMemo(() => {
+    const now = new Date();
+    const months = Array.from({ length: 6 }, (_, i) => {
+      const d = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1);
+      return {
+        key: `${d.getFullYear()}-${d.getMonth()}`,
+        label: d.toLocaleString("en", { month: "short" }),
+        opportunities: 0,
+        applications: 0,
+      };
+    });
+    const idx = Object.fromEntries(months.map((m, i) => [m.key, i]));
+    const bucket = (iso, target) => {
+      if (!iso) return;
+      const d = new Date(iso);
+      const key = `${d.getFullYear()}-${d.getMonth()}`;
+      if (idx[key] != null) months[idx[key]][target] += 1;
+    };
+    opportunities.forEach((o) => bucket(o.createdAt, "opportunities"));
+    applications.forEach((a) => bucket(a.createdAt, "applications"));
+    return {
+      months: months.map((m) => m.label),
+      opportunities: months.map((m) => m.opportunities),
+      applications: months.map((m) => m.applications),
+    };
+  }, [opportunities, applications]);
+
   const stats = useMemo(
     () => ({
       startups: startups.length,
       opportunities: opportunities.length,
       pendingApps: applications.filter((a) => a.status === "pending").length,
       totalApps: applications.length,
+      // Acceptance rate (rounded integer %).
+      acceptRate:
+        applications.length === 0
+          ? 0
+          : Math.round(
+              (applications.filter((a) => a.status === "accepted").length /
+                applications.length) *
+                100
+            ),
     }),
     [startups, opportunities, applications]
   );
@@ -174,6 +212,7 @@ export function FounderDataProvider({ user, children }) {
     error,
     isPremium,
     stats,
+    trend,
     hitsFreeLimit,
     FREE_OPP_LIMIT,
     hasApprovedStartup,

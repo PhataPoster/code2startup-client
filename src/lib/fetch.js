@@ -100,3 +100,22 @@ export async function fetchOpportunityById(id) {
     return null;
   }
 }
+
+/**
+ * Pull live distinct values for the browse-page dropdowns from the server.
+ * Returns a stable shape: { startup: { industry, funding_stage, sort },
+ * opportunity: { industry, work_type } } where each list item is
+ * { value, label, count } (count is best-effort; sort items omit it).
+ */
+export async function fetchFilterOptions() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/filters/options`, {
+      cache: "no-store",
+    });
+    const body = await safeJson(res);
+    return body.data || null;
+  } catch (error) {
+    console.error("Error fetching filter options:", error);
+    return null;
+  }
+}

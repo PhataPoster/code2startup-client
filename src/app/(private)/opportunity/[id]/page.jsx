@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import { useSession } from '@/lib/use-session';
+import { proxyApi } from '@/lib/api';
 
 const OpportunityDetails = () => {
   const { id } = useParams();
+  const { user } = useSession();
   const [opportunity, setOpportunity] = useState(null);
   const [loading, setLoading] = useState(true);
   const [applying, setApplying] = useState(false);
@@ -15,10 +18,9 @@ const OpportunityDetails = () => {
 
   useEffect(() => {
     const fetchOpportunity = async () => {
-      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
       try {
-        const res = await fetch(`${apiUrl}/opportunities/${id}`);
-        const { data } = await res.json();
+        // Authenticated fetch via the Next.js proxy route.
+        const { data } = await proxyApi.get(`/opportunities/${id}`);
         setOpportunity(data);
       } catch (error) {
         console.error('Error fetching opportunity:', error);
@@ -31,26 +33,26 @@ const OpportunityDetails = () => {
 
   const handleApply = async (e) => {
     e.preventDefault();
+    if (!user?.email) {
+      alert('You must be signed in to apply.');
+      return;
+    }
     setApplying(true);
-    const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
     try {
-      const res = await fetch(`${apiUrl}/applications`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          opportunity_id: id,
-          applicant_email: 'user@example.com', // Should get from auth session
-          portfolio_link: formData.portfolio_link,
-          motivation: formData.motivation,
-        }),
+      // Authenticated POST via the Next.js proxy route. The proxy injects the
+      // caller's JWT, so the backend can trust applicant_email on the server.
+      await proxyApi.post('/applications', {
+        opportunity_id: id,
+        applicant_email: user.email,
+        applicant_name: user.name || '',
+        portfolio_link: formData.portfolio_link,
+        motivation: formData.motivation,
       });
-      if (res.ok) {
-        alert('Application submitted successfully!');
-        setFormData({ portfolio_link: '', motivation: '' });
-      }
+      alert('Application submitted successfully!');
+      setFormData({ portfolio_link: '', motivation: '' });
     } catch (error) {
       console.error('Error applying:', error);
-      alert('Failed to submit application');
+      alert(error?.message || 'Failed to submit application');
     } finally {
       setApplying(false);
     }

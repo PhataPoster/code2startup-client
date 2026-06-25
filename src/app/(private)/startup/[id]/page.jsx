@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import { proxyApi } from '@/lib/api';
 
 const StartupDetails = () => {
   const { id } = useParams();
@@ -10,10 +11,9 @@ const StartupDetails = () => {
 
   useEffect(() => {
     const fetchStartup = async () => {
-      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
       try {
-        const res = await fetch(`${apiUrl}/startups/${id}`);
-        const { data } = await res.json();
+        // Authenticated fetch via the Next.js proxy route.
+        const { data } = await proxyApi.get(`/startups/${id}`);
         setStartup(data);
       } catch (error) {
         console.error('Error fetching startup:', error);

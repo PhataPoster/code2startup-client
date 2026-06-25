@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Loader2,
@@ -18,11 +18,13 @@ import {
   Save,
   Camera,
   Sparkles,
+  ImagePlus,
 } from "lucide-react";
 import { useSession } from "@/lib/use-session";
 import { api } from "@/lib/api";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "@/lib/toast";
+import { uploadToImgbb } from "@/lib/upload";
 
 function getInitials(name = "", email = "") {
   const source = (name || email || "U").trim();
@@ -559,6 +561,83 @@ function EditProfileModal({
   onClose,
   onSubmit,
 }) {
+  const fileInputRef = useRef(null);
+  // While a file is uploading we display the local blob URL so the user
+  // sees something happen immediately. Otherwise we fall back to the URL
+  // the parent has in `image` (which is "" by default and "" after Remove).
+  const [pendingPreview, setPendingPreview] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+
+  const displayedPreview = pendingPreview !== null ? pendingPreview : image || "";
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Reset the input so the user can re-pick the same file later
+    // if the upload fails.
+    e.target.value = "";
+
+    // Client-side validation — imgbb rejects anything over ~32MB and
+    // most setups are happier with <= 8MB.
+    if (!file.type.startsWith("image/")) {
+      const msg = "Please choose an image file.";
+      setUploadError(msg);
+      toast.error(msg);
+      return;
+    }
+    if (file.size > 8 * 1024 * 1024) {
+      const msg = "Image is too large. Please pick one under 8 MB.";
+      setUploadError(msg);
+      toast.error(msg);
+      return;
+    }
+
+    // Show a local preview immediately so the user sees something
+    // happen while the upload is in flight.
+    const objectUrl = URL.createObjectURL(file);
+    setPendingPreview(objectUrl);
+    setUploadError("");
+    setUploading(true);
+
+    try {
+      const url = await uploadToImgbb(file);
+      if (!url) {
+        throw new Error(
+          "Image upload is not configured on the server. Add NEXT_PUBLIC_IMGBB_KEY to enable uploads."
+        );
+      }
+      setImage(url);
+      // Clear the override so the display falls through to the new
+      // parent value (the http URL we just set).
+      setPendingPreview(null);
+      toast.success("Avatar uploaded.");
+    } catch (err) {
+      const msg = err?.message || "Failed to upload image. Please try again.";
+      setUploadError(msg);
+      // Drop the override so the preview falls back to the previous
+      // parent value (the avatar that was there before this attempt).
+      setPendingPreview(null);
+      toast.error(msg);
+    } finally {
+      setUploading(false);
+      URL.revokeObjectURL(objectUrl);
+    }
+  };
+
+  const handleRemove = () => {
+    setImage("");
+    setPendingPreview(null);
+    setUploadError("");
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const triggerFilePicker = () => {
+    if (uploading || saving) return;
+    fileInputRef.current?.click();
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
@@ -578,7 +657,7 @@ function EditProfileModal({
           <button
             type="button"
             onClick={onClose}
-            disabled={saving}
+            disabled={saving || uploading}
             className="rounded-md p-1 text-zinc-400 transition hover:bg-white/10 hover:text-white disabled:opacity-50"
             aria-label="Close"
           >
@@ -589,28 +668,68 @@ function EditProfileModal({
         <form onSubmit={onSubmit} className="space-y-4 px-6 py-5">
           <div>
             <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-zinc-400">
-              Avatar URL
+              Profile picture
             </label>
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-zinc-950/60 text-sm font-bold text-white">
-                {image ? (
+            <div className="flex items-center gap-4">
+              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/60">
+                {displayedPreview ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={image}
-                    alt="preview"
+                    src={displayedPreview}
+                    alt="Avatar preview"
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <Camera className="h-5 w-5 text-zinc-500" />
+                  <div className="flex h-full w-full items-center justify-center">
+                    <Camera className="h-6 w-6 text-zinc-500" />
+                  </div>
+                )}
+                {uploading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/60">
+                    <Loader2 className="h-5 w-5 animate-spin text-orange-300" />
+                  </div>
                 )}
               </div>
-              <input
-                type="url"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-                placeholder="https://…"
-                className="w-full rounded-lg border border-white/10 bg-zinc-950/60 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-orange-400 focus:outline-none"
-              />
+              <div className="flex flex-1 flex-col gap-2">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={triggerFilePicker}
+                    disabled={uploading || saving}
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    <ImagePlus className="h-4 w-4" />
+                    {uploading ? "Uploading…" : displayedPreview ? "Replace image" : "Upload image"}
+                  </button>
+                  {displayedPreview && (
+                    <button
+                      type="button"
+                      onClick={handleRemove}
+                      disabled={uploading || saving}
+                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-rose-400/20 bg-rose-500/10 px-3 py-2 text-xs font-semibold text-rose-200 transition hover:bg-rose-500/20 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                      Remove
+                    </button>
+                  )}
+                </div>
+                <p className="text-[11px] leading-snug text-zinc-500">
+                  PNG, JPG, GIF, or WebP · max 8 MB. Uploads go through imgbb.
+                </p>
+                {uploadError && (
+                  <p className="flex items-start gap-1.5 text-[11px] text-rose-300">
+                    <AlertTriangle className="mt-0.5 h-3 w-3 shrink-0" />
+                    <span>{uploadError}</span>
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 

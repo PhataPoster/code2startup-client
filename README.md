@@ -131,5 +131,29 @@ npm run build
 npm start
 ```
 
+### Vercel
+
+1. **Import the repo** on [vercel.com/new](https://vercel.com/new). Vercel
+   auto-detects Next.js — no framework preset change needed.
+2. **Set environment variables** (Project Settings → Environment Variables).
+   Mirror `.env.example`:
+   - `NEXT_PUBLIC_SITE_URL` — your Vercel URL (e.g. `https://your-app.vercel.app`)
+   - `NEXT_PUBLIC_SERVER_URL` — public URL of the Express backend
+   - `BACKEND_URL` — same value as `NEXT_PUBLIC_SERVER_URL` (read by the
+     server-side `/api/proxy` route)
+   - `NEXT_PUBLIC_BETTER_AUTH_URL` — same as `NEXT_PUBLIC_SITE_URL`
+   - `BETTER_AUTH_SECRET` — **must match** the server's `BETTER_AUTH_SECRET`
+     exactly, or JWT verification will silently fail.
+   - `MONGODB_URI` — connection string for the database Better Auth uses.
+   - Optional: `BETTER_AUTH_GOOGLE_CLIENT_ID` / `BETTER_AUTH_GOOGLE_CLIENT_SECRET`
+     to enable Google sign-in.
+3. **Deploy the backend separately** — the Express server
+   (`code2startup_server/`) cannot run on Vercel. Deploy it to Render,
+   Railway, Fly.io, or any Node host that keeps a long-running process.
+   The client talks to it via `BACKEND_URL`.
+4. **Build & deploy** — Vercel runs `next build` automatically. No extra
+   config is required; `proxy.js` (formerly `middleware.js`) is detected
+   from `src/proxy.js`.
+
 Make sure `NEXT_PUBLIC_SERVER_URL` points at a reachable API host and
 that `BETTER_AUTH_SECRET` matches between client and server.

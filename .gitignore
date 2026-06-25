@@ -33,9 +33,18 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+# local Next.js runtime logs (created when dev/build is piped to a file)
+next.log
+next.err.log
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files (commit .env.example, ignore local overrides)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+# Keep the example files tracked so deployments stay reproducible.
+!.env.example
 
 # vercel
 .vercel
