@@ -35,7 +35,6 @@ const MENUS = {
     { id: "overview", label: "Overview", icon: LayoutDashboard, href: "/dashboard/collaborator" },
     { id: "my-applications", label: "My Applications", icon: FileText, href: "/dashboard/collaborator/applications" },
     { id: "browse", label: "Browse Opportunities", icon: Search, href: "/dashboard/collaborator/browse" },
-    { id: "profile", label: "Profile", icon: UserCircle2, href: "/profile" },
   ],
   admin: [
     { id: "overview", label: "Overview", icon: LayoutDashboard, href: "/dashboard/admin" },
@@ -123,13 +122,23 @@ export function DashboardSideNav() {
         </span>
       </Link>
 
-      {/* User chip */}
+      {/* User chip — shows the profile image if one is set, otherwise
+          falls back to initials. Mirrors the pattern in site-navbar. */}
       <Link
         href="/profile"
         className="mb-4 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 transition hover:bg-white/10"
       >
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-orange-500 to-amber-400 text-sm font-black text-white shadow-lg shadow-orange-500/30">
-          {initials}
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-orange-500 to-amber-400 text-sm font-black text-white shadow-lg shadow-orange-500/30">
+          {user?.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={user.image}
+              alt={user?.name || user?.email || "Profile"}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            initials
+          )}
         </span>
         <span className="min-w-0 flex-1">
           <span className="block truncate text-sm font-semibold text-white">
