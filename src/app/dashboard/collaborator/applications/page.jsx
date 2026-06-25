@@ -1,10 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import ApplicationCard from "../_components/ApplicationCard";
 import { useCollabData } from "../_components/collab-data";
+import ConfirmDialog, { useConfirmTarget } from "@/components/confirm-dialog";
+import { toast } from "@/lib/toast";
 
 export default function CollaboratorApplicationsPage() {
   const { applications, withdrawApplication, loading, error } = useCollabData();
+  const withdrawTarget = useConfirmTarget();
+  const [withdrawingId, setWithdrawingId] = useState(null);
 
   if (loading)
     return <p className="text-sm text-zinc-400">Loading applications…</p>;
@@ -14,6 +19,19 @@ export default function CollaboratorApplicationsPage() {
         {error}
       </p>
     );
+
+  const performWithdraw = async (app) => {
+    setWithdrawingId(app._id);
+    try {
+      await withdrawApplication(app);
+      toast.success("Application withdrawn.");
+    } catch (err) {
+      toast.error(err?.message || "Failed to withdraw.");
+    } finally {
+      setWithdrawingId(null);
+      withdrawTarget.clear();
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -31,14 +49,23 @@ export default function CollaboratorApplicationsPage() {
               key={app._id}
               application={app}
               opportunity={app.opportunity}
-              onWithdraw={async () => {
-                if (!confirm("Withdraw this application?")) return;
-                await withdrawApplication(app);
-              }}
+              busy={withdrawingId === app._id}
+              onWithdraw={() => withdrawTarget.request(app)}
             />
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        open={!!withdrawTarget.target}
+        title="Withdraw this application?"
+        description="The founder will no longer see this application, and you can re-apply later if the role is still open."
+        confirmLabel="Withdraw application"
+        intent="warning"
+        busy={withdrawingId === withdrawTarget.target?._id}
+        onConfirm={() => performWithdraw(withdrawTarget.target)}
+        onCancel={withdrawTarget.clear}
+      />
     </div>
   );
 }

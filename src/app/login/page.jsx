@@ -17,6 +17,7 @@ import { ArrowRight, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 import { authClient } from "@/lib/auth-client";
 import { clearAuthToken } from "@/lib/api";
+import { toast } from "@/lib/toast";
 
 function LoginInner() {
   const router = useRouter();
@@ -43,6 +44,7 @@ function LoginInner() {
 
       if (!emailVal || !passwordVal) {
         setError("Please fill in all fields");
+        toast.error("Please fill in all fields.");
         setIsLoading(false);
         return;
       }
@@ -55,6 +57,8 @@ function LoginInner() {
       if (result.error) {
         throw new Error(result.error.message || "Invalid credentials");
       }
+
+      toast.success("Signed in. Welcome back!");
 
       // Pre-warm the JWT cache so the next API call is fast
       clearAuthToken();
@@ -80,7 +84,9 @@ function LoginInner() {
 
       router.push(intended);
     } catch (err) {
-      setError(err.message || "Login failed. Please try again.");
+      const msg = err?.message || "Login failed. Please try again.";
+      setError(msg);
+      toast.error(msg);
       setIsLoading(false);
     }
   };
@@ -93,7 +99,9 @@ function LoginInner() {
       // After OAuth callback, the user will be redirected back
       // and the session will be set.
     } catch (err) {
-      setError("Google login failed. Please try again.");
+      const msg = "Google login failed. Please try again.";
+      setError(msg);
+      toast.error(msg);
       setIsLoading(false);
     }
   };

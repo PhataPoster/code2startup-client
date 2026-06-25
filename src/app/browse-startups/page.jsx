@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { Search, SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import FormSelect from '@/components/forms/FormSelect';
+import SearchField from '@/components/forms/SearchField';
 
 const INDUSTRIES = [
   '',
@@ -83,6 +85,7 @@ const BrowseStartups = () => {
   );
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchStartups(1);
   }, [fetchStartups]);
 
@@ -134,54 +137,48 @@ const BrowseStartups = () => {
             )}
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="relative lg:col-span-2">
-              <Search
-                size={14}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"
-              />
-              <input
-                type="text"
-                placeholder="Search by name, description, or industry..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-white/10 py-2 pl-9 pr-3 text-white placeholder-zinc-500 transition focus:border-orange-400 focus:outline-none"
-              />
-            </div>
-            <select
+            <SearchField
+              wrapperClassName="lg:col-span-2"
+              placeholder="Search by name, description, or industry..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <FormSelect
               value={filterIndustry}
               onChange={(e) => setFilterIndustry(e.target.value)}
-              className="rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-white transition focus:border-orange-400 focus:outline-none"
+              aria-label="Filter by industry"
             >
               {INDUSTRIES.map((i) => (
                 <option key={i || 'all'} value={i}>
                   {i ? `Industry: ${i}` : 'All industries'}
                 </option>
               ))}
-            </select>
-            <select
+            </FormSelect>
+            <FormSelect
               value={sort}
               onChange={(e) => setSort(e.target.value)}
-              className="rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-white transition focus:border-orange-400 focus:outline-none"
+              aria-label="Sort startups"
             >
               {SORTS.map((s) => (
                 <option key={s.value} value={s.value}>
                   Sort: {s.label}
                 </option>
               ))}
-            </select>
+            </FormSelect>
           </div>
           <div className="mt-3">
-            <select
+            <FormSelect
+              wrapperClassName="sm:max-w-xs"
               value={filterStage}
               onChange={(e) => setFilterStage(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-white transition focus:border-orange-400 focus:outline-none sm:max-w-xs"
+              aria-label="Filter by funding stage"
             >
               {FUNDING_STAGES.map((f) => (
                 <option key={f || 'all'} value={f}>
                   {f ? `Funding: ${f}` : 'All funding stages'}
                 </option>
               ))}
-            </select>
+            </FormSelect>
           </div>
         </div>
 
@@ -219,6 +216,7 @@ const BrowseStartups = () => {
                   <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg shadow-black/30 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-orange-400/30 cursor-pointer">
                     <div className="flex h-40 items-center justify-center bg-linear-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-6">
                       {startup.logoURL ? (
+                        // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={startup.logoURL}
                           alt={startup.startup_name}

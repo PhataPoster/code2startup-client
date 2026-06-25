@@ -22,6 +22,7 @@ import {
 import { useSession } from "@/lib/use-session";
 import { api } from "@/lib/api";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "@/lib/toast";
 
 function getInitials(name = "", email = "") {
   const source = (name || email || "U").trim();
@@ -186,12 +187,12 @@ export default function ProfilePage() {
       await fetchProfile();
       await refresh?.();
       setSaveMsg({ type: "ok", text: "Profile updated successfully." });
+      toast.success("Profile updated.");
       setEditing(false);
     } catch (err) {
-      setSaveMsg({
-        type: "err",
-        text: err?.message || "Failed to update profile.",
-      });
+      const msg = err?.message || "Failed to update profile.";
+      setSaveMsg({ type: "err", text: msg });
+      toast.error(msg);
     } finally {
       setSaving(false);
     }
@@ -214,10 +215,12 @@ export default function ProfilePage() {
         type: "err",
         text: "New password must be at least 6 characters.",
       });
+      toast.error("New password must be at least 6 characters.");
       return;
     }
     if (newPwd !== confirmPwd) {
       setPwdMsg({ type: "err", text: "New passwords do not match." });
+      toast.error("New passwords do not match.");
       return;
     }
     setPwdBusy(true);
@@ -229,12 +232,12 @@ export default function ProfilePage() {
         revokeOtherSessions: false,
       });
       if (res?.error) {
-        setPwdMsg({
-          type: "err",
-          text: res.error?.message || "Failed to change password.",
-        });
+        const msg = res.error?.message || "Failed to change password.";
+        setPwdMsg({ type: "err", text: msg });
+        toast.error(msg);
       } else {
         setPwdMsg({ type: "ok", text: "Password updated. Use it next time you sign in." });
+        toast.success("Password updated.");
         setCurrentPwd("");
         setNewPwd("");
         setConfirmPwd("");
@@ -244,10 +247,9 @@ export default function ProfilePage() {
         }, 1500);
       }
     } catch (err) {
-      setPwdMsg({
-        type: "err",
-        text: err?.message || "Failed to change password.",
-      });
+      const msg = err?.message || "Failed to change password.";
+      setPwdMsg({ type: "err", text: msg });
+      toast.error(msg);
     } finally {
       setPwdBusy(false);
     }

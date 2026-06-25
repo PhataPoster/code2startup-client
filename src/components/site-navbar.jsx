@@ -18,6 +18,7 @@ import {
 import { BrandMark } from "./brand-mark";
 import { authClient } from "@/lib/auth-client";
 import { clearAuthToken } from "@/lib/api";
+import { toast } from "@/lib/toast";
 
 const publicLinks = [
   { href: "/", label: "Home", icon: Home },
@@ -126,8 +127,10 @@ export function SiteNavbar() {
   const handleLogout = async () => {
     try {
       await authClient.signOut();
+      toast.success("Signed out.");
     } catch (err) {
       console.error("Sign-out failed:", err);
+      toast.error("Sign-out failed. Try again.");
     }
     clearAuthToken();
     try {

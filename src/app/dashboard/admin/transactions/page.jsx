@@ -36,15 +36,15 @@ export default function AdminTransactionsPage() {
           No transactions recorded yet.
         </p>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-white/10">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto rounded-2xl border border-white/10">
+          <table className="w-full min-w-160 text-sm">
             <thead className="bg-black/30 text-left text-[10px] font-bold uppercase tracking-wider text-zinc-500">
               <tr>
-                <th className="px-4 py-3">Date</th>
-                <th className="px-4 py-3">Payer</th>
-                <th className="px-4 py-3">Purpose</th>
-                <th className="px-4 py-3 text-right">Amount</th>
-                <th className="px-4 py-3 text-right">Status</th>
+                <th className="px-3 py-3 sm:px-4">Date</th>
+                <th className="px-3 py-3 sm:px-4">Payer</th>
+                <th className="px-3 py-3 sm:px-4">Purpose</th>
+                <th className="px-3 py-3 text-right sm:px-4">Amount</th>
+                <th className="px-3 py-3 text-right sm:px-4">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">

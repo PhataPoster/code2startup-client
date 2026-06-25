@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { Search, SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import FormSelect from '@/components/forms/FormSelect';
+import SearchField from '@/components/forms/SearchField';
 
 const WORK_TYPES = ['', 'Full-time', 'Part-time', 'Contract', 'Internship'];
 const INDUSTRIES = [
@@ -82,6 +84,7 @@ const BrowseOpportunities = () => {
 
   // Re-fetch when any filter changes
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchOpportunities(1);
   }, [fetchOpportunities]);
 
@@ -137,67 +140,53 @@ const BrowseOpportunities = () => {
             )}
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            <div className="relative lg:col-span-2">
-              <Search
-                size={14}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"
-              />
-              <input
-                type="text"
-                placeholder="Search role title..."
-                value={searchRole}
-                onChange={(e) => setSearchRole(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-white/10 py-2 pl-9 pr-3 text-white placeholder-zinc-500 transition focus:border-orange-400 focus:outline-none"
-              />
-            </div>
-            <div className="relative lg:col-span-2">
-              <Search
-                size={14}
-                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"
-              />
-              <input
-                type="text"
-                placeholder="Search skills (e.g. react, ml)..."
-                value={searchSkills}
-                onChange={(e) => setSearchSkills(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-white/10 py-2 pl-9 pr-3 text-white placeholder-zinc-500 transition focus:border-orange-400 focus:outline-none"
-              />
-            </div>
-            <select
+            <SearchField
+              wrapperClassName="lg:col-span-2"
+              placeholder="Search role title..."
+              value={searchRole}
+              onChange={(e) => setSearchRole(e.target.value)}
+            />
+            <SearchField
+              wrapperClassName="lg:col-span-2"
+              placeholder="Search skills (e.g. react, ml)..."
+              value={searchSkills}
+              onChange={(e) => setSearchSkills(e.target.value)}
+            />
+            <FormSelect
               value={sort}
               onChange={(e) => setSort(e.target.value)}
-              className="rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-white transition focus:border-orange-400 focus:outline-none"
+              aria-label="Sort opportunities"
             >
               {SORTS.map((s) => (
                 <option key={s.value} value={s.value}>
                   Sort: {s.label}
                 </option>
               ))}
-            </select>
+            </FormSelect>
           </div>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <select
+            <FormSelect
               value={filterWorkType}
               onChange={(e) => setFilterWorkType(e.target.value)}
-              className="rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-white transition focus:border-orange-400 focus:outline-none"
+              aria-label="Filter by work type"
             >
               {WORK_TYPES.map((w) => (
                 <option key={w || 'all'} value={w}>
                   {w ? `Work type: ${w}` : 'All work types'}
                 </option>
               ))}
-            </select>
-            <select
+            </FormSelect>
+            <FormSelect
               value={filterIndustry}
               onChange={(e) => setFilterIndustry(e.target.value)}
-              className="rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-white transition focus:border-orange-400 focus:outline-none"
+              aria-label="Filter by industry"
             >
               {INDUSTRIES.map((i) => (
                 <option key={i || 'all'} value={i}>
                   {i ? `Industry: ${i}` : 'All industries'}
                 </option>
               ))}
-            </select>
+            </FormSelect>
           </div>
         </div>
 

@@ -4,6 +4,8 @@ import { useState } from "react";
 import OpportunityForm from "../_components/OpportunityForm";
 import OpportunityCard from "../_components/OpportunityCard";
 import { useFounderData } from "../_components/founder-data";
+import ConfirmDialog, { useConfirmTarget } from "@/components/confirm-dialog";
+import { toast } from "@/lib/toast";
 
 export default function FounderOpportunitiesPage() {
   const {
@@ -21,6 +23,8 @@ export default function FounderOpportunitiesPage() {
   } = useFounderData();
   const [editing, setEditing] = useState(null); // null = list, "new" = create form, opp obj = edit form
   const [busy, setBusy] = useState(false);
+  const deleteTarget = useConfirmTarget();
+  const [deletingId, setDeletingId] = useState(null);
 
   if (loading)
     return <p className="text-sm text-zinc-400">Loading opportunities…</p>;
@@ -30,6 +34,15 @@ export default function FounderOpportunitiesPage() {
         {error}
       </p>
     );
+
+  const performDelete = async (opp) => {
+    setDeletingId(opp._id);
+    const res = await deleteOpportunity(opp);
+    setDeletingId(null);
+    deleteTarget.clear();
+    if (res?.ok) toast.success(`"${opp.role_title || opp.title}" deleted.`);
+    else toast.error(res?.error?.message || "Failed to delete opportunity.");
+  };
 
   return (
     <div className="space-y-6">
@@ -89,7 +102,16 @@ export default function FounderOpportunitiesPage() {
               // editing === opp    -> update (target=opp)
               const target = editing === "new" ? null : editing;
               const res = await submitOpportunity(target, payload);
-              if (res?.ok !== false) setEditing(null);
+              if (res?.ok !== false) {
+                toast.success(
+                  target
+                    ? `Updated "${target.role_title || target.title}".`
+                    : "Opportunity posted.",
+                );
+                setEditing(null);
+              } else {
+                toast.error(res?.error?.message || "Failed to save opportunity.");
+              }
             } finally {
               setBusy(false);
             }
@@ -108,15 +130,24 @@ export default function FounderOpportunitiesPage() {
             <OpportunityCard
               key={o._id}
               opportunity={o}
+              busy={deletingId === o._id}
               onEdit={() => setEditing(o)}
-              onDelete={async () => {
-                if (!confirm(`Delete "${o.role_title}"?`)) return;
-                await deleteOpportunity(o);
-              }}
+              onDelete={() => deleteTarget.request(o)}
             />
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        open={!!deleteTarget.target}
+        title={`Delete "${deleteTarget.target?.role_title || deleteTarget.target?.title}"?`}
+        description="This permanently removes the opportunity and all its applications."
+        confirmLabel="Delete opportunity"
+        intent="danger"
+        busy={deletingId === deleteTarget.target?._id}
+        onConfirm={() => performDelete(deleteTarget.target)}
+        onCancel={deleteTarget.clear}
+      />
     </div>
   );
 }

@@ -21,7 +21,7 @@ export default function UserRow({ user, onBlock, onChangeRole, busy }) {
       aria-busy={busy || undefined}
       className="border-t border-white/10 transition hover:bg-white/2 aria-busy:bg-white/3"
     >
-      <td className="px-6 py-3">
+      <td className="px-3 py-3 sm:px-6">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-zinc-800 text-xs font-bold text-white">
             {user.name?.[0]?.toUpperCase() || user.email[0].toUpperCase()}
@@ -29,8 +29,8 @@ export default function UserRow({ user, onBlock, onChangeRole, busy }) {
           <span className="font-semibold text-white">{user.name || "—"}</span>
         </div>
       </td>
-      <td className="px-6 py-3 text-sm text-zinc-300">{user.email}</td>
-      <td className="px-6 py-3">
+      <td className="px-3 py-3 text-sm text-zinc-300 sm:px-6">{user.email}</td>
+      <td className="px-3 py-3 sm:px-6">
         <span
           className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
             ROLE_STYLES[user.role] || "border-white/10 bg-white/5 text-zinc-200"
@@ -39,7 +39,7 @@ export default function UserRow({ user, onBlock, onChangeRole, busy }) {
           <Icon size={11} /> {user.role}
         </span>
       </td>
-      <td className="px-6 py-3">
+      <td className="px-3 py-3 sm:px-6">
         <span
           className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
             user.isBlocked
@@ -50,7 +50,7 @@ export default function UserRow({ user, onBlock, onChangeRole, busy }) {
           {user.isBlocked ? "Blocked" : "Active"}
         </span>
       </td>
-      <td className="px-6 py-3 text-right">
+      <td className="px-3 py-3 text-right sm:px-6">
         <div className="inline-flex items-center gap-2">
           {onChangeRole && (
             <select

@@ -4,7 +4,11 @@ import { useEffect, useState, Suspense } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useSession } from "@/lib/use-session";
 import { Crown, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
-import { DashboardSideNav } from "@/components/dashboard/SideNavbar";
+import {
+  DashboardSideNav,
+  DashboardSideNavProvider,
+  DashboardSideNavTrigger,
+} from "@/components/dashboard/SideNavbar";
 import { FounderDataProvider, useFounderData } from "./_components/founder-data";
 
 function DashboardSkeleton() {
@@ -42,6 +46,7 @@ function FounderLayoutInner({ children }) {
   }, [user, sessionLoading, router, pathname]);
 
   // ===== Toast for payment return =====
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
@@ -51,8 +56,8 @@ function FounderLayoutInner({ children }) {
     } else if (paymentStatus === "cancel") {
       setToast({ type: "warning", message: "Payment cancelled." });
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
     if (!toast) return;
@@ -66,17 +71,35 @@ function FounderLayoutInner({ children }) {
 
   return (
     <FounderDataProvider user={user}>
-      <div className="flex min-h-screen bg-zinc-950 text-white">
-        <DashboardSideNav />
-        <main className="min-w-0 flex-1 px-4 py-8 sm:px-6 lg:px-8">
-          <div className="mx-auto w-full max-w-7xl">
-            <DashboardHeader />
-            {toast && <Toast tone={toast.type}>{toast.message}</Toast>}
-            <ErrorBanner />
-            {children}
+      <DashboardSideNavProvider>
+        <div className="flex min-h-screen bg-zinc-950 text-white">
+          <DashboardSideNav />
+          <div className="flex min-w-0 flex-1 flex-col">
+            {/* Mobile-only top bar. The trigger opens the slide-in drawer
+                rendered by <DashboardSideNav />; the brand mark gives the
+                bar a stable identity when the sidebar is hidden. */}
+            <div className="sticky top-0 z-30 flex items-center gap-3 border-b border-white/10 bg-zinc-950/85 px-3 py-3 backdrop-blur-xl lg:hidden">
+              <DashboardSideNavTrigger />
+              <span className="flex min-w-0 flex-col leading-tight">
+                <span className="truncate text-sm font-semibold text-white">
+                  Code2Startup
+                </span>
+                <span className="text-[10px] uppercase tracking-[0.18em] text-orange-300">
+                  Founder workspace
+                </span>
+              </span>
+            </div>
+            <main className="min-w-0 flex-1 px-4 py-8 sm:px-6 lg:px-8">
+              <div className="mx-auto w-full max-w-7xl">
+                <DashboardHeader />
+                {toast && <Toast tone={toast.type}>{toast.message}</Toast>}
+                <ErrorBanner />
+                {children}
+              </div>
+            </main>
           </div>
-        </main>
-      </div>
+        </div>
+      </DashboardSideNavProvider>
     </FounderDataProvider>
   );
 }

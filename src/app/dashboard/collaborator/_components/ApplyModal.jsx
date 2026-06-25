@@ -1,18 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { X, Loader2, ExternalLink } from "lucide-react";
 import { api } from "@/lib/api";
+import { toast } from "@/lib/toast";
 
 export default function ApplyModal({ opportunity, onCancel, onApplied }) {
   const [portfolio, setPortfolio] = useState("");
   const [motivation, setMotivation] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    setError("");
-  }, [opportunity]);
 
   if (!opportunity) return null;
 
@@ -30,9 +27,12 @@ export default function ApplyModal({ opportunity, onCancel, onApplied }) {
         portfolio_link: portfolio.trim() || undefined,
         motivation: motivation.trim(),
       });
+      toast.success("Application submitted.");
       onApplied?.(opportunity._id);
     } catch (err) {
-      setError(err.message || "Failed to apply");
+      const msg = err.message || "Failed to apply";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setBusy(false);
     }

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ClockAlert } from "lucide-react";
 import OpportunityForm from "../../_components/OpportunityForm";
 import { useFounderData } from "../../_components/founder-data";
+import { toast } from "@/lib/toast";
 
 // Deep-link target from the side-nav's "Add Opportunity" item.
 export default function FounderNewOpportunityPage() {
@@ -85,8 +86,13 @@ export default function FounderNewOpportunityPage() {
         onSubmit={async (payload) => {
           // No target doc on the deep-link create page — pass null
           // to match the (targetDoc | null, payload) handler signature.
-          await submitOpportunity(null, payload);
-          router.push("/dashboard/founder/opportunities");
+          const res = await submitOpportunity(null, payload);
+          if (res?.ok) {
+            toast.success("Opportunity posted.");
+            router.push("/dashboard/founder/opportunities");
+          } else {
+            toast.error(res?.error?.message || "Failed to post opportunity.");
+          }
         }}
       />
     </div>

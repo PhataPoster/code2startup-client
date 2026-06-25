@@ -22,6 +22,7 @@ import { ArrowRight, Eye, EyeOff, Lock, Mail, User, Upload, X } from "lucide-rea
 import { BrandMark } from "@/components/brand-mark";
 import { uploadToImgbb } from "@/lib/upload";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "@/lib/toast";
 
 const roleOptions = [
   { key: "founder", label: "Founder – I'm building a startup" },
@@ -90,15 +91,16 @@ function RegisterInner() {
     const password = formData.get("password");
     const confirm = formData.get("confirmPassword");
 
-    if (!name) { setError("Full name is required"); return; }
-    if (!email) { setError("Email is required"); return; }
-    if (!password || password.length < 6) { setError("Password must be at least 6 characters"); return; }
+    if (!name) { setError("Full name is required"); toast.error("Full name is required."); return; }
+    if (!email) { setError("Email is required"); toast.error("Email is required."); return; }
+    if (!password || password.length < 6) { setError("Password must be at least 6 characters"); toast.error("Password must be at least 6 characters."); return; }
     if (!/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
       setError("Password must contain at least one uppercase and one lowercase letter");
+      toast.error("Password must include at least one uppercase and one lowercase letter.");
       return;
     }
-    if (password !== confirm) { setError("Passwords do not match"); return; }
-    if (!role) { setError("Please select your role"); return; }
+    if (password !== confirm) { setError("Passwords do not match"); toast.error("Passwords do not match."); return; }
+    if (!role) { setError("Please select your role"); toast.error("Please select your role."); return; }
 
     setIsLoading(true);
     try {
@@ -120,9 +122,12 @@ function RegisterInner() {
         throw new Error(result.error.message || "Registration failed");
       }
 
+      toast.success("Account created. Welcome aboard!");
       router.push(search.get("redirect") || "/dashboard");
     } catch (err) {
-      setError(err.message || "Registration failed. Please try again.");
+      const msg = err?.message || "Registration failed. Please try again.";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }
@@ -133,7 +138,9 @@ function RegisterInner() {
     try {
       await authClient.signIn.social({ provider: "google" });
     } catch (err) {
-      setError("Google sign-up failed. Please try again.");
+      const msg = "Google sign-up failed. Please try again.";
+      setError(msg);
+      toast.error(msg);
       setIsLoading(false);
     }
   };
@@ -362,6 +369,26 @@ function RegisterInner() {
                 id="terms"
                 className="mt-0.5"
               />
+              <label
+                htmlFor="terms"
+                className="cursor-pointer text-sm text-zinc-300"
+              >
+                I agree to the{" "}
+                <Link
+                  href="/terms"
+                  className="text-orange-300 underline-offset-2 hover:underline"
+                >
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="/privacy"
+                  className="text-orange-300 underline-offset-2 hover:underline"
+                >
+                  Privacy Policy
+                </Link>
+                .
+              </label>
             </div>
 
             <Button

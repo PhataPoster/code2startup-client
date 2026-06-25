@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Check, X, ExternalLink, Loader2 } from "lucide-react";
 import { api } from "@/lib/api";
+import { toast } from "@/lib/toast";
 
 const STATUS_STYLES = {
   pending: "border-amber-400/30 bg-amber-500/10 text-amber-200",
@@ -26,8 +27,15 @@ export default function ApplicationRow({ application, onChanged }) {
     try {
       await api.put(`/applications/${application._id}/status`, { status });
       onChanged?.(application._id, status);
+      toast.success(
+        status === "accepted"
+          ? "Application accepted."
+          : "Application rejected.",
+      );
     } catch (err) {
-      setError(err.message || "Failed to update");
+      const msg = err?.message || "Failed to update";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setBusy(false);
     }

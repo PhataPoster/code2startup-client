@@ -9,6 +9,17 @@ html {
 	color-scheme: dark;
 }
 
+/* Dark-theme <option> menus: native select dropdown panels ignore most
+ * inherited styles, so we hard-set them here. Works alongside color-scheme:dark. */
+select option {
+	background-color: #18181b; /* zinc-900 */
+	color: #f4f4f5; /* zinc-100 */
+}
+select option:checked {
+	background-color: #f97316; /* orange-500 (primary) */
+	color: #ffffff;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

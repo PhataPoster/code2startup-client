@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Loader2, RefreshCw, Bell, Inbox } from "lucide-react";
 import StartupModerationCard from "../_components/StartupModerationCard";
 import { useAdminData } from "../_components/admin-data";
+import ConfirmDialog, { useConfirmTarget } from "@/components/confirm-dialog";
+import { toast } from "@/lib/toast";
 
 const STATUS_FILTERS = [
   { value: "", label: "All" },
@@ -30,14 +32,8 @@ export default function AdminStartupsPage() {
   const [busyOppId, setBusyOppId] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [statusFilter, setStatusFilter] = useState("");
-  const [toast, setToast] = useState(null);
-
-  // Auto-dismiss the toast after a few seconds.
-  useEffect(() => {
-    if (!toast) return;
-    const t = setTimeout(() => setToast(null), 4000);
-    return () => clearTimeout(t);
-  }, [toast]);
+  const removeTarget = useConfirmTarget();
+  const deleteTarget = useConfirmTarget();
 
   // Auto-refresh when the admin lands on this page so a freshly created
   // Pending startup shows up without a manual reload. We poll quietly every
@@ -65,12 +61,9 @@ export default function AdminStartupsPage() {
     setRefreshing(true);
     try {
       await refresh();
-      setToast({ type: "success", message: "Refreshed." });
+      toast.success("Refreshed.");
     } catch (err) {
-      setToast({
-        type: "error",
-        message: err?.message || "Failed to refresh.",
-      });
+      toast.error(err?.message || "Failed to refresh.");
     } finally {
       setRefreshing(false);
     }
@@ -96,68 +89,42 @@ export default function AdminStartupsPage() {
     setBusyStartupId(startup._id);
     const res = await toggleStartupStatus(startup, "Active");
     setBusyStartupId(null);
-    setToast({
-      type: res?.ok ? "success" : "error",
-      message: res?.ok
-        ? `"${startup.startup_name}" is now Active.`
-        : res?.error?.message || "Failed to approve startup.",
-    });
+    if (res?.ok) toast.success(`"${startup.startup_name}" is now Active.`);
+    else toast.error(res?.error?.message || "Failed to approve startup.");
   };
 
   const handleRemove = async (startup) => {
-    if (!confirm(`Remove "${startup.startup_name}"? This hides it from the public.`))
-      return;
     setBusyStartupId(startup._id);
     const res = await toggleStartupStatus(startup, "Removed");
     setBusyStartupId(null);
-    setToast({
-      type: res?.ok ? "success" : "error",
-      message: res?.ok
-        ? `"${startup.startup_name}" removed.`
-        : res?.error?.message || "Failed to remove startup.",
-    });
+    if (res?.ok) toast.success(`"${startup.startup_name}" removed.`);
+    else toast.error(res?.error?.message || "Failed to remove startup.");
   };
 
   const handleReactivate = async (startup) => {
     setBusyStartupId(startup._id);
     const res = await toggleStartupStatus(startup, "Pending");
     setBusyStartupId(null);
-    setToast({
-      type: res?.ok ? "success" : "error",
-      message: res?.ok
-        ? `"${startup.startup_name}" returned to Pending.`
-        : res?.error?.message || "Failed to update startup.",
-    });
+    if (res?.ok) toast.success(`"${startup.startup_name}" returned to Pending.`);
+    else toast.error(res?.error?.message || "Failed to update startup.");
   };
 
-  const handleDelete = async (startup) => {
-    if (
-      !confirm(
-        `Permanently delete "${startup.startup_name}"? This will also remove its opportunities and any applications they received. This cannot be undone.`
-      )
-    )
-      return;
+  const performDelete = async (startup) => {
     setBusyStartupId(startup._id);
     const res = await deleteStartup(startup);
     setBusyStartupId(null);
-    setToast({
-      type: res?.ok ? "success" : "error",
-      message: res?.ok
-        ? `"${startup.startup_name}" was permanently deleted.`
-        : res?.error?.message || "Failed to delete startup.",
-    });
+    deleteTarget.clear();
+    if (res?.ok) toast.success(`"${startup.startup_name}" was permanently deleted.`);
+    else toast.error(res?.error?.message || "Failed to delete startup.");
   };
 
   const handleToggleOpp = async (opp) => {
     setBusyOppId(opp._id);
     const res = await moderateOpportunity(opp);
     setBusyOppId(null);
-    setToast({
-      type: res?.ok ? "success" : "error",
-      message: res?.ok
-        ? `Opportunity ${opp.status === "open" ? "closed" : "reopened"}.`
-        : res?.error?.message || "Failed to update opportunity.",
-    });
+    if (res?.ok)
+      toast.success(`Opportunity ${opp.status === "open" ? "closed" : "reopened"}.`);
+    else toast.error(res?.error?.message || "Failed to update opportunity.");
   };
 
   if (loading)
@@ -260,9 +227,9 @@ export default function AdminStartupsPage() {
                 opportunities={opps}
                 busy={busyStartupId === s._id}
                 onApprove={() => handleApprove(s)}
-                onRemove={() => handleRemove(s)}
+                onRemove={() => removeTarget.request(s)}
                 onReactivate={() => handleReactivate(s)}
-                onDelete={() => handleDelete(s)}
+                onDelete={() => deleteTarget.request(s)}
                 onToggleOpp={handleToggleOpp}
                 busyOppId={busyOppId}
               />
@@ -271,18 +238,26 @@ export default function AdminStartupsPage() {
         </div>
       )}
 
-      {toast && (
-        <div
-          role="status"
-          className={`fixed bottom-6 right-6 z-50 max-w-sm rounded-lg border px-4 py-3 text-sm shadow-lg backdrop-blur ${
-            toast.type === "error"
-              ? "border-rose-400/30 bg-rose-500/15 text-rose-100"
-              : "border-emerald-400/30 bg-emerald-500/15 text-emerald-100"
-          }`}
-        >
-          {toast.message}
-        </div>
-      )}
+      <ConfirmDialog
+        open={!!removeTarget.target}
+        title={`Remove "${removeTarget.target?.startup_name}"?`}
+        description="This hides the startup from the public. You can reactivate it later by moving it back to Pending."
+        confirmLabel="Remove startup"
+        intent="danger"
+        busy={busyStartupId === removeTarget.target?._id}
+        onConfirm={() => handleRemove(removeTarget.target)}
+        onCancel={removeTarget.clear}
+      />
+      <ConfirmDialog
+        open={!!deleteTarget.target}
+        title={`Permanently delete "${deleteTarget.target?.startup_name}"?`}
+        description="This will also remove its opportunities and any applications they received. This cannot be undone."
+        confirmLabel="Delete permanently"
+        intent="danger"
+        busy={busyStartupId === deleteTarget.target?._id}
+        onConfirm={() => performDelete(deleteTarget.target)}
+        onCancel={deleteTarget.clear}
+      />
     </div>
   );
 }

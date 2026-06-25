@@ -50,12 +50,12 @@ export default function FounderApplicationsPage() {
               key={opportunity?._id || "unknown"}
               className="overflow-hidden rounded-2xl border border-white/10 bg-white/5"
             >
-              <header className="flex items-center justify-between border-b border-white/10 bg-black/20 px-4 py-3">
-                <div>
-                  <p className="font-bold text-white">
+<header className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-white/10 bg-black/20 px-4 py-3">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-bold text-white">
                     {opportunity?.role_title || "Unknown role"}
                   </p>
-                  <p className="text-xs text-zinc-400">
+                  <p className="truncate text-xs text-zinc-400">
                     {opportunity?.startup?.startup_name || "—"} · {apps.length}{" "}
                     applicant{apps.length === 1 ? "" : "s"}
                   </p>

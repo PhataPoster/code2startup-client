@@ -5,6 +5,8 @@ import { Search, Users as UsersIcon, ShieldAlert, Loader2 } from "lucide-react";
 import { useAdminData } from "../_components/admin-data";
 import { useSession } from "@/lib/use-session";
 import UserRow from "../_components/UserRow";
+import ConfirmDialog, { useConfirmTarget } from "@/components/confirm-dialog";
+import { toast } from "@/lib/toast";
 
 const ROLE_FILTERS = [
   { value: "", label: "All roles" },
@@ -32,7 +34,7 @@ export default function AdminUsersPage() {
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
   const [busyEmail, setBusyEmail] = useState(null);
-  const [toast, setToast] = useState(null);
+  const blockTarget = useConfirmTarget();
   const debounceRef = useRef(null);
 
   // Debounced search: hits the server (not the local filter) so results stay
@@ -48,13 +50,6 @@ export default function AdminUsersPage() {
     };
   }, [search, searchUsers]);
 
-  // Auto-dismiss toast after 4s.
-  useEffect(() => {
-    if (!toast) return;
-    const t = setTimeout(() => setToast(null), 4000);
-    return () => clearTimeout(t);
-  }, [toast]);
-
   // Local role filter is applied on top of the server query (the server also
   // supports ?role=, but using it would require another request cycle, and
   // the page-side filter lets the role select respond instantly).
@@ -65,45 +60,35 @@ export default function AdminUsersPage() {
 
   const handleRoleChange = async (target, nextRole) => {
     if (target.email === currentAdmin?.email && nextRole !== "admin") {
-      setToast({
-        type: "error",
-        message: "You can't change your own role here. Ask another admin.",
-      });
+      toast.error("You can't change your own role here. Ask another admin.");
       return;
     }
     setBusyEmail(target.email);
     const res = await updateUserRole(target, nextRole);
     setBusyEmail(null);
     if (!res?.ok) {
-      setToast({
-        type: "error",
-        message:
-          res?.error?.message ||
+      toast.error(
+        res?.error?.message ||
           "Failed to update role. The server may have rejected it.",
-      });
+      );
     } else {
-      setToast({ type: "success", message: `Role updated to ${nextRole}.` });
+      toast.success(`Role updated to ${nextRole}.`);
     }
   };
 
   const handleBlock = async (target) => {
     if (target.email === currentAdmin?.email) {
-      setToast({ type: "error", message: "You can't block your own account." });
+      toast.error("You can't block your own account.");
       return;
     }
     setBusyEmail(target.email);
     const res = await toggleUserBlock(target);
     setBusyEmail(null);
+    blockTarget.clear();
     if (!res?.ok) {
-      setToast({
-        type: "error",
-        message: res?.error?.message || "Failed to update block status.",
-      });
+      toast.error(res?.error?.message || "Failed to update block status.");
     } else {
-      setToast({
-        type: "success",
-        message: res.isBlocked ? "User blocked." : "User unblocked.",
-      });
+      toast.success(res.isBlocked ? "User blocked." : "User unblocked.");
     }
   };
 
@@ -172,15 +157,15 @@ export default function AdminUsersPage() {
         </select>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50">
-        <table className="w-full text-left text-sm">
+      <div className="overflow-x-auto rounded-2xl border border-white/10 bg-zinc-900/50">
+        <table className="w-full min-w-160 text-left text-sm">
           <thead className="bg-white/2 text-[10px] uppercase tracking-wider text-zinc-400">
             <tr>
-              <th className="px-6 py-3 font-semibold">User</th>
-              <th className="px-6 py-3 font-semibold">Email</th>
-              <th className="px-6 py-3 font-semibold">Role</th>
-              <th className="px-6 py-3 font-semibold">Status</th>
-              <th className="px-6 py-3 text-right font-semibold">Actions</th>
+              <th className="px-3 py-3 font-semibold sm:px-6">User</th>
+              <th className="px-3 py-3 font-semibold sm:px-6">Email</th>
+              <th className="px-3 py-3 font-semibold sm:px-6">Role</th>
+              <th className="px-3 py-3 font-semibold sm:px-6">Status</th>
+              <th className="px-3 py-3 text-right font-semibold sm:px-6">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -210,7 +195,7 @@ export default function AdminUsersPage() {
                   user={u}
                   busy={busyEmail === u.email}
                   onChangeRole={(nextRole) => handleRoleChange(u, nextRole)}
-                  onBlock={handleBlock}
+                  onBlock={(target) => blockTarget.request(target)}
                 />
               ))
             )}
@@ -238,18 +223,24 @@ export default function AdminUsersPage() {
         )}
       </div>
 
-      {toast && (
-        <div
-          role="status"
-          className={`fixed bottom-6 right-6 z-50 max-w-sm rounded-lg border px-4 py-3 text-sm shadow-lg backdrop-blur ${
-            toast.type === "error"
-              ? "border-rose-400/30 bg-rose-500/15 text-rose-100"
-              : "border-emerald-400/30 bg-emerald-500/15 text-emerald-100"
-          }`}
-        >
-          {toast.message}
-        </div>
-      )}
+      <ConfirmDialog
+        open={!!blockTarget.target}
+        title={
+          blockTarget.target?.isBlocked
+            ? `Unblock ${blockTarget.target?.name || blockTarget.target?.email}?`
+            : `Block ${blockTarget.target?.name || blockTarget.target?.email}?`
+        }
+        description={
+          blockTarget.target?.isBlocked
+            ? "They'll be able to sign in and use the platform again immediately."
+            : "They will be signed out and prevented from signing in until you unblock them."
+        }
+        confirmLabel={blockTarget.target?.isBlocked ? "Unblock user" : "Block user"}
+        intent="danger"
+        busy={busyEmail === blockTarget.target?.email}
+        onConfirm={() => handleBlock(blockTarget.target)}
+        onCancel={blockTarget.clear}
+      />
     </section>
   );
 }
