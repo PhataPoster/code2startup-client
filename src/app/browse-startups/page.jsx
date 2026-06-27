@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import FormSelect from '@/components/forms/FormSelect';
 import SearchField from '@/components/forms/SearchField';
-import { fetchFilterOptions } from '@/lib/fetch';
+import Image from 'next/image';
+import { api } from '@/lib/api';
 
 const SORTS = [
   { value: 'newest', label: 'Newest' },
@@ -50,7 +51,12 @@ const BrowseStartups = () => {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const opts = await fetchFilterOptions();
+      let opts = null;
+      try {
+        opts = await api.get('/filters/options');
+      } catch (err) {
+        console.warn('fetchFilterOptions failed:', err);
+      }
       if (cancelled || !opts) return;
       if (opts.startup?.industry?.length) {
         setIndustryOptions(
@@ -77,8 +83,6 @@ const BrowseStartups = () => {
 
   const fetchStartups = useCallback(
     async (pg = 1) => {
-      // Public browse page — direct fetch to the Express backend.
-      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
       try {
         setLoading(true);
         setError('');
@@ -90,9 +94,7 @@ const BrowseStartups = () => {
         if (filterIndustry) params.append('industry', filterIndustry);
         if (filterStage) params.append('funding_stage', filterStage);
 
-        const res = await fetch(`${apiUrl}/startups?${params.toString()}`);
-        const result = await res.json();
-        if (!res.ok) throw new Error(result.message || 'Failed to load');
+        const result = await api.get(`/startups?${params.toString()}`);
         setStartups(result.data || []);
         setPagination(result.pagination || {});
         setPage(pg);
@@ -243,10 +245,12 @@ const BrowseStartups = () => {
                   <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg shadow-black/30 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-orange-400/30 cursor-pointer">
                     <div className="flex h-40 items-center justify-center bg-linear-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-6">
                       {startup.logoURL ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                           src={startup.logoURL}
                           alt={startup.startup_name}
+                          width={96}
+                          height={96}
+                          unoptimized
                           className="h-24 w-24 rounded-lg border border-white/10 bg-white/10 object-cover"
                         />
                       ) : (

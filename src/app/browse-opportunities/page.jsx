@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import FormSelect from '@/components/forms/FormSelect';
 import SearchField from '@/components/forms/SearchField';
-import { fetchFilterOptions } from '@/lib/fetch';
+import { api } from '@/lib/api';
 
 const SORTS = [
   { value: 'newest', label: 'Newest' },
@@ -47,7 +47,12 @@ const BrowseOpportunities = () => {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const opts = await fetchFilterOptions();
+      let opts = null;
+      try {
+        opts = await api.get('/filters/options');
+      } catch (err) {
+        console.warn('fetchFilterOptions failed:', err);
+      }
       if (cancelled || !opts) return;
       if (opts.opportunity?.work_type?.length) {
         setWorkTypeOptions(
@@ -79,8 +84,6 @@ const BrowseOpportunities = () => {
 
   const fetchOpportunities = useCallback(
     async (pg = 1) => {
-      // Public browse page — direct fetch to the Express backend.
-      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
       try {
         setLoading(true);
         setError('');
@@ -93,9 +96,7 @@ const BrowseOpportunities = () => {
         if (filterWorkType) params.append('work_type', filterWorkType);
         if (filterIndustry) params.append('industry', filterIndustry);
 
-        const res = await fetch(`${apiUrl}/opportunities?${params.toString()}`);
-        const result = await res.json();
-        if (!res.ok) throw new Error(result.message || 'Failed to load');
+        const result = await api.get(`/opportunities?${params.toString()}`);
         setOpportunities(result.data || []);
         setPagination(result.pagination || {});
         setPage(pg);

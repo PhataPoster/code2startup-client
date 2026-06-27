@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Pencil, Trash2, ExternalLink, Briefcase } from "lucide-react";
 
 export default function StartupCard({ startup, onEdit, onDelete, busy }) {
@@ -7,10 +8,12 @@ export default function StartupCard({ startup, onEdit, onDelete, busy }) {
     <div className="flex flex-col rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-orange-400/30">
       <div className="flex items-start gap-4">
         {startup.logoURL || startup.logo ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={startup.logoURL || startup.logo}
             alt={startup.startup_name}
+            width={56}
+            height={56}
+            unoptimized
             className="h-14 w-14 shrink-0 rounded-lg border border-white/10 object-cover"
           />
         ) : (

@@ -29,18 +29,23 @@ export default function FeaturedOpportunities() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadOpps = async () => {
+    let cancelled = false;
+    (async () => {
       try {
         const data = await fetchFeaturedOpportunities();
-        setOpportunities(data);
+        if (!cancelled) setOpportunities(data);
       } catch (error) {
-        console.error('Error loading opportunities:', error);
-        setOpportunities([]);
+        if (!cancelled) {
+          console.error('Error loading opportunities:', error);
+          setOpportunities([]);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
+    })();
+    return () => {
+      cancelled = true;
     };
-    loadOpps();
   }, []);
 
   if (loading) {

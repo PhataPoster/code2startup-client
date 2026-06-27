@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   createContext,
@@ -241,10 +242,12 @@ function SideNavUserChip({ user, loading, initials }) {
     >
       <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-orange-500 to-amber-400 text-sm font-black text-white shadow-lg shadow-orange-500/30">
         {user?.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={user.image}
             alt={user?.name || user?.email || "Profile"}
+            width={40}
+            height={40}
+            unoptimized
             className="h-full w-full object-cover"
           />
         ) : (

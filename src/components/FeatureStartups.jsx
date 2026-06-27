@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { fetchStartups } from '@/lib/fetch';
 
@@ -29,18 +30,23 @@ export default function FeatureStartups() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadStartups = async () => {
+    let cancelled = false;
+    (async () => {
       try {
         const data = await fetchStartups();
-        setStartups(data);
+        if (!cancelled) setStartups(data);
       } catch (error) {
-        console.error('Error loading startups:', error);
-        setStartups([]);
+        if (!cancelled) {
+          console.error('Error loading startups:', error);
+          setStartups([]);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
+    })();
+    return () => {
+      cancelled = true;
     };
-    loadStartups();
   }, []);
 
   if (loading) {
@@ -97,9 +103,12 @@ export default function FeatureStartups() {
               >
                 <div className="flex h-48 items-center justify-center bg-linear-to-br from-zinc-900 via-zinc-900 to-orange-950/40 p-6">
                   {startup.logoURL ? (
-                    <img
+                    <Image
                       src={startup.logoURL}
                       alt={startup.startup_name}
+                      width={112}
+                      height={112}
+                      unoptimized
                       className="h-28 w-28 rounded-2xl border border-white/10 bg-white/10 object-cover shadow-xl shadow-black/20"
                     />
                   ) : (

@@ -1,22 +1,20 @@
 // code2startup/src/lib/api.js
 // Centralized client -> Express API helper.
-// Attaches the Better Auth JWT (via /api/auth/token) to every request as
-// Authorization: Bearer <token>, and forwards cookies for CORS requests.
 //
-// Two flavors:
-//   - `api`        : direct browser -> Express call (CORS, JWT in header).
-//                    Use only for routes the backend exposes to the world
-//                    (auth endpoints, public health checks, etc.).
-//   - `proxyApi`   : browser -> Next.js `/api/proxy/<path>` -> Express.
-//                    The proxy re-reads the session server-side and injects
-//                    the JWT, so the browser never touches the backend
-//                    directly and never needs the token. Use this for any
-//                    authenticated/private resource.
+// Both `api` and `proxyApi` route browser calls through the same-origin
+// Next.js /api/proxy/<path> route, which then forwards them to Express on
+// the server. The browser never talks to Express directly, so there's no
+// CORS surface, no cross-origin cookie problem, and the frontend never
+// needs to know the backend's hostname / port / TLS cert. The proxy also
+// re-reads the session cookie server-side and mints the JWT there, so the
+// browser never sees the token either.
+//
+//   - `api`       : legacy wrapper kept for the many existing call sites
+//                   that import { api } from "@/lib/api".
+//   - `proxyApi`  : identical implementation under a clearer name; preferred
+//                   for new code.
 
 import { authClient } from "./auth-client";
-
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
 
 // `undefined` lets the browser resolve same-origin automatically. Setting this
 // to a literal string (e.g. "") keeps relative URLs working in tests.
@@ -32,6 +30,10 @@ let inflightTokenPromise = null;
 /**
  * Get a fresh Better Auth JWT for the current user. Caches until ~60s before
  * the token expires. Concurrent callers share a single in-flight request.
+ *
+ * The token is forwarded as Authorization on outgoing requests so the proxy
+ * can authenticate to Express without re-minting on every call (the proxy
+ * will still mint a fresh token server-side if this header is missing).
  */
 export async function getAuthToken() {
   const now = Date.now();
@@ -64,13 +66,6 @@ export function clearAuthToken() {
   cachedTokenExp = 0;
 }
 
-async function buildHeaders(extra = {}) {
-  const headers = { "Content-Type": "application/json", ...extra };
-  const token = await getAuthToken();
-  if (token) headers.Authorization = `Bearer ${token}`;
-  return headers;
-}
-
 async function handle(res, retryFn) {
   const text = await res.text();
   let body;
@@ -93,38 +88,20 @@ async function handle(res, retryFn) {
   return body;
 }
 
-function buildRequest(method, path, body, options = {}) {
-  return (async () => {
-    const res = await fetch(`${API_BASE_URL}${path}`, {
-      method,
-      credentials: "include",
-      headers: await buildHeaders(options.headers),
-      body: body ? JSON.stringify(body) : undefined,
-      ...options,
-    });
-    return res;
-  })();
-}
-
-async function request(method, path, body, options = {}) {
-  let retried = false;
-  const doFetch = async () => {
-    const res = await buildRequest(method, path, body, options);
-    return handle(res, retried ? null : async () => {
-      retried = true;
-      const res2 = await buildRequest(method, path, body, options);
-      return handle(res2, null);
-    });
-  };
-  return doFetch();
-}
+// `api` is a thin wrapper over the same proxy used by `proxyApi` — kept
+// for the dozens of existing call sites (profile, dashboards, pricing, etc.)
+// that already import { api } from "@/lib/api". The browser always hits the
+// same-origin /api/proxy route, so there's no need to know the backend host.
 
 export const api = {
-  base: API_BASE_URL,
-  get: (path, options = {}) => request("GET", path, null, options),
-  post: (path, body, options = {}) => request("POST", path, body, options),
-  put: (path, body, options = {}) => request("PUT", path, body, options),
-  delete: (path, options = {}) => request("DELETE", path, null, options),
+  // Kept for back-compat: previously the Express base URL. Now everything
+  // routes through the same-origin proxy, so the browser never needs to
+  // know the real backend host.
+  base: PROXY_BASE_URL ? `${PROXY_BASE_URL}/api/proxy` : "/api/proxy",
+  get: (path, options = {}) => proxyRequest("GET", path, null, options),
+  post: (path, body, options = {}) => proxyRequest("POST", path, body, options),
+  put: (path, body, options = {}) => proxyRequest("PUT", path, body, options),
+  delete: (path, options = {}) => proxyRequest("DELETE", path, null, options),
 };
 
 // ────────────────────────────────────────────────────────────────────────────

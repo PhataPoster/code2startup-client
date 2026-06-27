@@ -22,41 +22,37 @@ function pickForwardHeaders(incoming) {
 }
 
 async function forward(req, { params }) {
-  // 1. Authn gate — never proxy for an unauthenticated caller.
+  // 1. Build the upstream URL first — public reads (featured-*, filters/*)
+  //    don't need any auth.
+  // In Next.js 16 both `headers()` and route `params` are async — must await.
   const hdrs = await headers();
-  let session = null;
-  try {
-    session = await auth.api.getSession({ headers: hdrs });
-  } catch {
-    session = null;
-  }
-  if (!session?.user) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  // 2. Build the upstream URL.
-  const pathSegments = (params?.path || []).map(encodeURIComponent).join("/");
+  const { path: rawPath } = await params;
+  const pathSegments = (rawPath || []).map(encodeURIComponent).join("/");
   const url = new URL(req.url);
   const upstream = `${BACKEND}/${pathSegments}${url.search}`;
 
-  // 3. Mint (or reuse) the JWT for this user. The JWT carries role/isBlocked
-  // so the Express backend can re-check authorization server-side.
+  // 2. Read the session if one exists. We don't gate on it — public browse
+  //    pages need to fetch featured startups / opportunities / filters
+  //    without being signed in. The Express backend is the authority on
+  //    who is allowed to read what; we just forward whatever session we
+  //    can find and attach the JWT if there is one.
   let token = "";
   try {
-    const jwt = await auth.api.getToken({ headers: hdrs });
-    token = jwt?.token || "";
+    const session = await auth.api.getSession({ headers: hdrs });
+    if (session?.user) {
+      const jwt = await auth.api.getToken({ headers: hdrs });
+      token = jwt?.token || "";
+    }
   } catch {
-    token = "";
-  }
-  if (!token) {
-    return Response.json({ error: "Token unavailable" }, { status: 401 });
+    // No session / cookie invalid — proceed anonymously. The upstream will
+    // reject with 401/403 if the endpoint actually requires auth.
   }
 
-  // 4. Assemble the forwarded request.
+  // 3. Assemble the forwarded request.
   const method = req.method.toUpperCase();
   const forwardHeaders = {
     ...pickForwardHeaders(req.headers),
-    Authorization: `Bearer ${token}`,
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 
   const init = { method, headers: forwardHeaders };

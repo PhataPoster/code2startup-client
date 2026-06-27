@@ -4,18 +4,6 @@ import { useState, useRef, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  Button,
-  Checkbox,
-  FieldError,
-  Form,
-  InputGroup,
-  Label,
-  ListBox,
-  Select,
-  TextField,
-  Spinner,
-} from "@heroui/react";
 import { Check } from "lucide-react";
 import { FaGoogle } from "react-icons/fa";
 import { ArrowRight, Eye, EyeOff, Lock, Mail, User, Upload, X } from "lucide-react";
@@ -145,6 +133,12 @@ function RegisterInner() {
     }
   };
 
+  // Shared class strings so each field has identical styling.
+  const inputWrapper =
+    "flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900/80 px-2 transition focus-within:border-orange-500/50";
+  const inputClass =
+    "w-full bg-transparent py-3 text-sm text-white placeholder:text-zinc-500 outline-none";
+
   return (
     <div className="min-h-screen bg-linear-to-br from-zinc-950 to-zinc-900 px-4 py-10 text-white sm:px-6 lg:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-2xl flex-col justify-center gap-8">
@@ -175,99 +169,105 @@ function RegisterInner() {
             </div>
           )}
 
-          <Form onSubmit={handleRegister} className="mt-6 flex flex-col gap-5" validationBehavior="aria">
-            <TextField isRequired name="name" className="w-full">
-              <Label className="text-sm font-medium text-zinc-200">Full Name</Label>
-              <InputGroup fullWidth variant="secondary" className="rounded-full border border-white/10 bg-zinc-900/80 focus-within:border-orange-500/50">
-                <InputGroup.Prefix className="px-3 text-zinc-400">
+          <form onSubmit={handleRegister} className="mt-6 flex flex-col gap-5" noValidate>
+            {/* Full name */}
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="name" className="text-sm font-medium text-zinc-200">
+                Full Name
+              </label>
+              <div className={inputWrapper}>
+                <span className="px-2 text-zinc-400">
                   <User className="h-4 w-4" />
-                </InputGroup.Prefix>
-                <InputGroup.Input
+                </span>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
                   autoComplete="name"
-                  className="bg-transparent text-white placeholder:text-zinc-500"
+                  required
+                  className={inputClass}
                   placeholder="John Doe"
                 />
-              </InputGroup>
-              <FieldError className="text-xs text-red-400" />
-            </TextField>
+              </div>
+            </div>
 
-            <TextField isRequired name="email" type="email" className="w-full">
-              <Label className="text-sm font-medium text-zinc-200">Email Address</Label>
-              <InputGroup fullWidth variant="secondary" className="rounded-full border border-white/10 bg-zinc-900/80 focus-within:border-orange-500/50">
-                <InputGroup.Prefix className="px-3 text-zinc-400">
+            {/* Email */}
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="email" className="text-sm font-medium text-zinc-200">
+                Email Address
+              </label>
+              <div className={inputWrapper}>
+                <span className="px-2 text-zinc-400">
                   <Mail className="h-4 w-4" />
-                </InputGroup.Prefix>
-                <InputGroup.Input
+                </span>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
                   autoComplete="email"
-                  className="bg-transparent text-white placeholder:text-zinc-500"
+                  required
+                  className={inputClass}
                   placeholder="you@example.com"
                 />
-              </InputGroup>
-              <FieldError className="text-xs text-red-400" />
-            </TextField>
+              </div>
+            </div>
 
-            <TextField isRequired name="role" className="w-full">
-              <Label className="text-sm font-medium text-zinc-200">I am a</Label>
-              <Select
-                name="role"
-                selectedKey={role || null}
-                onSelectionChange={(key) => setRole(typeof key === "string" ? key : "")}
-                placeholder="Choose your role"
-                variant="secondary"
-                fullWidth
-                isRequired
-                className="rounded-full border border-white/10 bg-zinc-900/80 focus-within:border-orange-500/50"
-              >
-                <Select.Trigger className="rounded-full border-0 bg-transparent px-4 py-3 text-left text-white shadow-none">
-                  <Select.Value className="text-white" />
-                  <Select.Indicator className="text-zinc-400" />
-                </Select.Trigger>
-                <Select.Popover placement="bottom end" className="rounded-2xl border border-white/10 bg-zinc-950 p-2 shadow-2xl shadow-black/50">
-                  <ListBox className="space-y-1">
-                    {roleOptions.map((option) => (
-                      <ListBox.Item
-                        key={option.key}
-                        id={option.key}
-                        textValue={option.label}
-                        className="rounded-xl px-3 py-2 text-sm text-zinc-200 outline-none transition hover:bg-white/10 focus:bg-white/10"
-                      >
-                        {option.label}
-                      </ListBox.Item>
-                    ))}
-                  </ListBox>
-                </Select.Popover>
-              </Select>
-              <input type="hidden" name="role" value={role} />
-              <FieldError className="text-xs text-red-400" />
-            </TextField>
+            {/* Role select — native <select> styled to match the rest of the form. */}
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="role" className="text-sm font-medium text-zinc-200">
+                I am a
+              </label>
+              <div className={inputWrapper}>
+                <select
+                  id="role"
+                  name="role"
+                  required
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className={`${inputClass} cursor-pointer appearance-none rounded-full bg-zinc-900/80 pl-2 pr-8`}
+                >
+                  <option value="" disabled>
+                    Choose your role
+                  </option>
+                  {roleOptions.map((option) => (
+                    <option key={option.key} value={option.key}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <span aria-hidden="true" className="pointer-events-none pr-3 text-zinc-400">▾</span>
+              </div>
+            </div>
 
-            <TextField isRequired name="password" className="w-full">
-              <Label className="text-sm font-medium text-zinc-200">Password</Label>
-              <InputGroup fullWidth variant="secondary" className="rounded-full border border-white/10 bg-zinc-900/80 focus-within:border-orange-500/50">
-                <InputGroup.Prefix className="px-3 text-zinc-400">
+            {/* Password */}
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="password" className="text-sm font-medium text-zinc-200">
+                Password
+              </label>
+              <div className={inputWrapper}>
+                <span className="px-2 text-zinc-400">
                   <Lock className="h-4 w-4" />
-                </InputGroup.Prefix>
-                <InputGroup.Input
+                </span>
+                <input
+                  id="password"
+                  name="password"
                   autoComplete="new-password"
-                  className="bg-transparent text-white placeholder:text-zinc-500"
+                  required
+                  className={inputClass}
                   placeholder="Min 6 chars, 1 uppercase, 1 lowercase"
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <InputGroup.Suffix className="px-2">
-                  <Button
-                    isIconOnly
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                    size="sm"
-                    variant="ghost"
-                    onPress={() => setShowPassword((value) => !value)}
-                    className="text-zinc-400 hover:text-white"
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </Button>
-                </InputGroup.Suffix>
-              </InputGroup>
+                <button
+                  type="button"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  onClick={() => setShowPassword((value) => !value)}
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full text-zinc-400 transition hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
               {password.length > 0 && (
                 <div className="mt-2 flex gap-3 text-xs">
                   <div className="flex flex-col gap-1">
@@ -286,41 +286,42 @@ function RegisterInner() {
                   </div>
                 </div>
               )}
-              <FieldError className="text-xs text-red-400" />
-            </TextField>
+            </div>
 
-            <TextField isRequired name="confirmPassword" className="w-full">
-              <Label className="text-sm font-medium text-zinc-200">Confirm Password</Label>
-              <InputGroup fullWidth variant="secondary" className="rounded-full border border-white/10 bg-zinc-900/80 focus-within:border-orange-500/50">
-                <InputGroup.Prefix className="px-3 text-zinc-400">
+            {/* Confirm password */}
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="confirmPassword" className="text-sm font-medium text-zinc-200">
+                Confirm Password
+              </label>
+              <div className={inputWrapper}>
+                <span className="px-2 text-zinc-400">
                   <Lock className="h-4 w-4" />
-                </InputGroup.Prefix>
-                <InputGroup.Input
+                </span>
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
                   autoComplete="new-password"
-                  className="bg-transparent text-white placeholder:text-zinc-500"
+                  required
+                  className={inputClass}
                   placeholder="Confirm your password"
                   type={showConfirmPassword ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                <InputGroup.Suffix className="px-2">
-                  <Button
-                    isIconOnly
-                    aria-label={showConfirmPassword ? "Hide password" : "Show password"}
-                    size="sm"
-                    variant="ghost"
-                    onPress={() => setShowConfirmPassword((value) => !value)}
-                    className="text-zinc-400 hover:text-white"
-                  >
-                    {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </Button>
-                </InputGroup.Suffix>
-              </InputGroup>
-              <FieldError className="text-xs text-red-400" />
-            </TextField>
+                <button
+                  type="button"
+                  aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                  onClick={() => setShowConfirmPassword((value) => !value)}
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full text-zinc-400 transition hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                >
+                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
 
+            {/* Profile picture upload */}
             <div className="w-full">
-              <Label className="text-sm font-medium text-zinc-200">Profile Picture (optional)</Label>
+              <span className="text-sm font-medium text-zinc-200">Profile Picture (optional)</span>
               <div className="mt-2 flex items-center gap-4">
                 {imagePreview ? (
                   <div className="relative h-16 w-16 shrink-0">
@@ -354,25 +355,24 @@ function RegisterInner() {
                   />
                   {isUploadingImage && (
                     <div className="mt-1 flex items-center gap-2 text-xs text-zinc-400">
-                      <Spinner size="sm" /> Uploading...
+                      <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-zinc-400 border-t-transparent" />
+                      Uploading...
                     </div>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* Terms Checkbox - fixed label */}
-            <div className="flex items-start gap-2">
-              <Checkbox
-                isSelected={agreeTerms}
-                onValueChange={(isSelected) => setAgreeTerms(isSelected)}
+            {/* Terms checkbox */}
+            <label htmlFor="terms" className="flex cursor-pointer items-start gap-2">
+              <input
                 id="terms"
-                className="mt-0.5"
+                type="checkbox"
+                checked={agreeTerms}
+                onChange={(e) => setAgreeTerms(e.target.checked)}
+                className="mt-0.5 h-4 w-4 cursor-pointer rounded border-white/20 bg-zinc-900 text-orange-500 accent-orange-500 focus:ring-orange-500/50"
               />
-              <label
-                htmlFor="terms"
-                className="cursor-pointer text-sm text-zinc-300"
-              >
+              <span className="text-sm text-zinc-300">
                 I agree to the{" "}
                 <Link
                   href="/terms"
@@ -388,19 +388,27 @@ function RegisterInner() {
                   Privacy Policy
                 </Link>
                 .
-              </label>
-            </div>
+              </span>
+            </label>
 
-            <Button
+            <button
               type="submit"
-              isDisabled={isLoading || isUploadingImage || passwordErrors.length > 0}
-              isLoading={isLoading || isUploadingImage}
-              className="mt-2 w-full rounded-full bg-linear-to-r from-orange-500 to-orange-400 font-semibold text-white shadow-lg shadow-orange-500/30 transition hover:from-orange-400 hover:to-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-500/70"
+              disabled={isLoading || isUploadingImage || passwordErrors.length > 0}
+              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-linear-to-r from-orange-500 to-orange-400 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/30 transition hover:from-orange-400 hover:to-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-500/70 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Create Account
-              <ArrowRight className="ml-1 h-4 w-4" />
-            </Button>
-          </Form>
+              {isLoading || isUploadingImage ? (
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                  Creating account…
+                </span>
+              ) : (
+                <>
+                  Create Account
+                  <ArrowRight className="ml-1 h-4 w-4" />
+                </>
+              )}
+            </button>
+          </form>
 
           <div className="my-6 h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
@@ -409,15 +417,15 @@ function RegisterInner() {
               Or sign up with
             </p>
             <div className="flex justify-center">
-              <Button
-                variant="bordered"
+              <button
+                type="button"
                 onClick={handleGoogleSignup}
-                isDisabled={isLoading}
-                className="border-white/10 bg-white/5 px-6 text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                startContent={<FaGoogle className="h-5 w-5" />}
+                disabled={isLoading}
+                className="inline-flex items-center justify-center gap-3 rounded-full border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500/50 disabled:cursor-not-allowed disabled:opacity-60"
               >
+                <FaGoogle className="h-5 w-5" />
                 Continue with Google
-              </Button>
+              </button>
             </div>
           </div>
 

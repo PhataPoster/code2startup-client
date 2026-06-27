@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -208,10 +209,12 @@ export function SiteNavbar() {
               >
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br from-orange-500 to-amber-400 text-xs font-black text-white shadow-md shadow-orange-500/30">
                   {user.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={user.image}
                       alt={user.name || user.email}
+                      width={32}
+                      height={32}
+                      unoptimized
                       className="h-full w-full rounded-full object-cover"
                     />
                   ) : (

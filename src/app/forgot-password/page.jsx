@@ -2,13 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import {
-  Button,
-  Form,
-  InputGroup,
-  Label,
-  TextField,
-} from "@heroui/react";
 import { ArrowRight, Mail, CheckCircle2 } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 import { toast } from "@/lib/toast";
@@ -43,6 +36,11 @@ export default function ForgotPasswordPage() {
       setIsLoading(false);
     }
   };
+
+  const inputWrapper =
+    "flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 transition focus-within:border-orange-500/60 focus-within:bg-white/10";
+  const inputClass =
+    "w-full bg-transparent py-3 text-sm text-white placeholder:text-zinc-500 outline-none";
 
   return (
     <div className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-zinc-950 px-4 py-12 text-white sm:px-6">
@@ -104,41 +102,57 @@ export default function ForgotPasswordPage() {
               </p>
             </div>
 
-            <Form onSubmit={handleSubmit} className="space-y-5">
-              <TextField
-                type="email"
-                isRequired
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                isInvalid={Boolean(error)}
-                errorMessage={error}
-                classNames={{
-                  inputWrapper:
-                    "bg-white/5 border border-white/10 data-[hover=true]:bg-white/10 group-data-[focus=true]:bg-white/10 group-data-[focus=true]:border-orange-500/60",
-                  input: "text-white placeholder:text-zinc-500",
-                }}
-              >
-                <Label className="text-sm text-zinc-200">Email address</Label>
-                <InputGroup>
-                  <InputGroup.Prefix>
-                    <Mail className="h-4 w-4 text-zinc-400" />
-                  </InputGroup.Prefix>
-                  <InputGroup.Input
-                    placeholder="you@startup.com"
+            <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="email" className="text-sm text-zinc-200">
+                  Email address
+                </label>
+                <div className={inputWrapper}>
+                  <span className="px-2 text-zinc-400">
+                    <Mail className="h-4 w-4" />
+                  </span>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
                     autoComplete="email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (error) setError("");
+                    }}
+                    aria-invalid={Boolean(error)}
+                    aria-describedby={error ? "email-error" : undefined}
+                    className={inputClass}
+                    placeholder="you@startup.com"
                   />
-                </InputGroup>
-              </TextField>
+                </div>
+                {error && (
+                  <p id="email-error" className="text-xs text-red-400">
+                    {error}
+                  </p>
+                )}
+              </div>
 
-              <Button
+              <button
                 type="submit"
-                isDisabled={isLoading}
-                className="w-full rounded-full bg-linear-to-r from-orange-500 to-orange-400 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-orange-500/30 transition hover:from-orange-400 hover:to-orange-300"
+                disabled={isLoading}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-linear-to-r from-orange-500 to-orange-400 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-orange-500/30 transition hover:from-orange-400 hover:to-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-500/70 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {isLoading ? "Sending…" : "Send reset link"}
-                {!isLoading && <ArrowRight className="ml-1 h-4 w-4" />}
-              </Button>
-            </Form>
+                {isLoading ? (
+                  <span className="inline-flex items-center gap-2">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                    Sending…
+                  </span>
+                ) : (
+                  <>
+                    Send reset link
+                    <ArrowRight className="ml-1 h-4 w-4" />
+                  </>
+                )}
+              </button>
+            </form>
 
             <div className="mt-6 text-center text-sm text-zinc-400">
               Remembered it?{" "}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   Loader2,
@@ -289,10 +290,12 @@ export default function ProfilePage() {
               <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
                 <div className="relative flex h-24 w-24 shrink-0 items-center justify-center rounded-3xl border-4 border-zinc-950 bg-linear-to-br from-orange-500 to-amber-400 text-2xl font-black text-white shadow-xl shadow-orange-500/30 sm:h-28 sm:w-28 sm:text-3xl">
                   {display.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={display.image}
                       alt={displayName || "Profile"}
+                      width={112}
+                      height={112}
+                      unoptimized
                       className="h-full w-full rounded-3xl object-cover"
                     />
                   ) : (
@@ -673,10 +676,12 @@ function EditProfileModal({
             <div className="flex items-center gap-4">
               <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/60">
                 {displayedPreview ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={displayedPreview}
                     alt="Avatar preview"
+                    width={64}
+                    height={64}
+                    unoptimized
                     className="h-full w-full object-cover"
                   />
                 ) : (

@@ -1,4 +1,9 @@
 @import "tailwindcss";
+
+/* HeroUI v3.2.1 — CSS-only design system.
+ * Package entry must be the bundled stylesheet, NOT the bare package name
+ * (the package's "style" export points at dist/index.css which already
+ * pulls in tailwindcss + tw-animate-css + the default theme). */
 @import "@heroui/styles";
 
 @theme {

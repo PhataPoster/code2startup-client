@@ -62,11 +62,7 @@ const steps = [
 ];
 
 export default function PlatformPulse() {
-  const [stats, setStats] = useState({
-    startups: 0,
-    opportunities: 0,
-    applications: 0,
-  });
+  const [stats, setStats] = useState({ startups: 0, opportunities: 0, applications: 0 });
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {

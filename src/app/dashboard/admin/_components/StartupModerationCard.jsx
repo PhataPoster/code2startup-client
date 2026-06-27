@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   Check,
   X,
@@ -34,10 +35,12 @@ export default function StartupModerationCard({
     >
       <div className="flex items-start gap-4">
         {startup.logoURL || startup.logo ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={startup.logoURL || startup.logo}
             alt={startup.startup_name}
+            width={48}
+            height={48}
+            unoptimized
             className="h-12 w-12 shrink-0 rounded-lg border border-white/10 object-cover"
           />
         ) : (

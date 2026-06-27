@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Upload, X, Loader2 } from "lucide-react";
 import { uploadToImgbb } from "@/lib/upload";
 
@@ -118,10 +119,12 @@ export default function StartupForm({ initial = null, onSubmit, onCancel, busy }
         <Field label="Logo" full>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
             {form.logoURL && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={form.logoURL}
                 alt="logo preview"
+                width={64}
+                height={64}
+                unoptimized
                 className="h-16 w-16 shrink-0 rounded-lg border border-white/10 object-cover"
               />
             )}

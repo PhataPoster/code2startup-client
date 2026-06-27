@@ -16,7 +16,7 @@ export default function TransactionRow({ payment }) {
         {payment.user_email || payment.email}
       </td>
       <td className="px-6 py-3 text-sm font-bold text-white">
-        ${Number(payment.amount || 0).toFixed(2)}
+        ${Number(payment.amount/100 || 0).toFixed(2)}
       </td>
       <td className="px-6 py-3">
         <span
